@@ -40,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const html = vscode.Uri.joinPath(
 				context.extensionUri,
 				'src/components',
-				'index.html'
+				'component.html'
 			);
 			fs.readFile(html.fsPath, 'utf-8', (err, data) => {
 				if (err) {
