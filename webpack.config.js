@@ -54,7 +54,10 @@ const componentTS = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'component.js',
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'module'
+  },
+  experiments: {
+    outputModule: true
   },
   externals: {
     vscode: 'commonjs vscode'

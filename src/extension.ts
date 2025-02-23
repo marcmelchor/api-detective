@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as fs from 'fs';
-// import { DetectiveAPI } from '../components/index';
+import * as path from 'path';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -32,47 +32,22 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.ViewColumn.One,
 				{
 					enableScripts: true,
-					localResourceRoots: [
-						vscode.Uri.joinPath(context.extensionUri, 'src/components')
-					]
 				}
 			);
-			const html = vscode.Uri.joinPath(
-				context.extensionUri,
-				'src/components',
-				'component.html'
+			const html = vscode.Uri.file(
+				path.join(context.extensionPath, 'src/components', 'component.html')
 			);
-			fs.readFile(html.fsPath, 'utf-8', (err, data) => {
-				if (err) {
-					vscode.window.showErrorMessage('Failed to load HTML file.');
-					return;
-				}
 
-				const webView = panel.webview.asWebviewUri(
-					vscode.Uri.joinPath(context.extensionUri, 'src/components')
-				);
+			const componentScriptUri = panel.webview.asWebviewUri(
+				vscode.Uri.file(path.join(context.extensionPath, 'dist', 'component.js'))
+			);
+			let componentHTML = fs.readFileSync(html.fsPath, 'utf-8');
 
-				let updatedHtml = data
-                    .replace(/src="(.*?)"/g, (match, src) => {
-                        return `src="${panel.webview.asWebviewUri(
-                            vscode.Uri.joinPath(
-                                context.extensionUri,
-                                "src/components",
-                                src
-                            )
-                        )}"`;
-                    })
-                    .replace(/href="(.*?)"/g, (match, href) => {
-                        return `href="${panel.webview.asWebviewUri(
-                            vscode.Uri.joinPath(
-                                context.extensionUri,
-                                "src/components",
-                                href
-                            )
-                        )}"`;
-                    });
-				panel.webview.html = updatedHtml;
-			});
+			componentHTML = componentHTML.replace(
+				"import { DetectiveAPI } from './component.js';",
+				`import { DetectiveAPI } from '${ componentScriptUri }';`
+			);
+			panel.webview.html = componentHTML;
 		})
 	);
 }

@@ -1,3 +1,3 @@
 export class DetectiveAPI {
-    name = 'Marc';
+  name = "Marc";
 }
