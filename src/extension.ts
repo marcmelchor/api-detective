@@ -35,11 +35,11 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 			);
 			const html = vscode.Uri.file(
-				path.join(context.extensionPath, 'src/components', 'component.html')
+				path.join(context.extensionPath, 'src/components/api.component', 'component.html')
 			);
 
 			const componentScriptUri = panel.webview.asWebviewUri(
-				vscode.Uri.file(path.join(context.extensionPath, 'dist', 'component.js'))
+				vscode.Uri.file(path.join(context.extensionPath, 'dist', 'api.component', 'component.js'))
 			);
 			let componentHTML = fs.readFileSync(html.fsPath, 'utf-8');
 

@@ -50,9 +50,9 @@ const extensionConfig = {
 const componentTS = {
   target: 'node',
   mode: 'development',
-  entry: './src/components/component.ts',
+  entry: './src/components/api.component/component.ts',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist', 'api.component'),
     filename: 'component.js',
     libraryTarget: 'module'
   },
