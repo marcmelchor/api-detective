@@ -3,6 +3,7 @@
 'use strict';
 
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 //@ts-check
 /** @typedef {import('webpack').Configuration} WebpackConfig **/
@@ -50,10 +51,10 @@ const extensionConfig = {
 const componentTS = {
   target: 'node',
   mode: 'development',
-  entry: './src/components/api.component/component.ts',
+  entry: './src/components/detective.api/detective-api.ts',
   output: {
-    path: path.resolve(__dirname, 'dist', 'api.component'),
-    filename: 'component.js',
+    path: path.resolve(__dirname, 'dist', 'detective.api'),
+    filename: 'detective-api.js',
     libraryTarget: 'module'
   },
   experiments: {
@@ -82,6 +83,13 @@ const componentTS = {
   infrastructureLogging: {
     level: "log",
   },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/components/detective.api/detective-api.css', to: './' }
+      ]
+    }),
+  ]
 };
 
 module.exports = [ extensionConfig, componentTS ];

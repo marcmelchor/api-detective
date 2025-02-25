@@ -1,8 +1,22 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
+import { takeUntil } from 'rxjs';
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+
+import { ApiService } from './services/api-service';
+import { DetectiveAPI } from './components/detective.api/detective-api';
+
+
+const apiService = new ApiService();
+const detectiveApi = new DetectiveAPI();
+detectiveApi.getRequestType()
+	.pipe(takeUntil(apiService.unsubscribeNotifier()))
+	.subscribe();
+apiService.requestType$
+	.pipe(takeUntil(apiService.unsubscribeNotifier()))
+	.subscribe();
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -24,6 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(disposable);
 	*/
+
 	context.subscriptions.push(
 		vscode.commands.registerCommand('api-detective.startApiDetective', () => {
 			const panel = vscode.window.createWebviewPanel(
@@ -35,22 +50,32 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 			);
 			const html = vscode.Uri.file(
-				path.join(context.extensionPath, 'src/components/api.component', 'component.html')
+				path.join(context.extensionPath, 'src/components/detective.api', 'detective-api.html')
 			);
 
-			const componentScriptUri = panel.webview.asWebviewUri(
-				vscode.Uri.file(path.join(context.extensionPath, 'dist', 'api.component', 'component.js'))
+			const componentJsUri = panel.webview.asWebviewUri(
+				vscode.Uri.file(path.join(context.extensionPath, 'dist', 'detective.api', 'detective-api.js'))
+			);
+			const componentCssUri = panel.webview.asWebviewUri(
+				vscode.Uri.file(path.join(context.extensionPath, 'dist', 'detective.api', 'detective-api.css'))
 			);
 			let componentHTML = fs.readFileSync(html.fsPath, 'utf-8');
 
-			componentHTML = componentHTML.replace(
-				"import { DetectiveAPI } from './component.js';",
-				`import { DetectiveAPI } from '${ componentScriptUri }';`
-			);
+			componentHTML = componentHTML
+				.replace(
+					"import { DetectiveAPI } from './detective-api.js';",
+					`import { DetectiveAPI } from '${ componentJsUri }';`
+				)
+				.replace(
+					'href=""',
+					`href=${ componentCssUri }`
+				);
 			panel.webview.html = componentHTML;
 		})
 	);
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+	apiService.stopSubscriptions();
+}
