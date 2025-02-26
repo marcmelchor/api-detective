@@ -20,7 +20,7 @@
             name="request-type-select">
           </select>
           <input class="request-input" id="request-editor" type="text" />
-          <button>Send</button>
+          <button id="request-send">Send</button>
         </div>
       </div>
     </div>
@@ -33,6 +33,11 @@
       const detective = new DetectiveAPI();
 
       const selectRequest = document.getElementById('request-dropdown');
+      const inputUrl = document.getElementById('request-editor');
+      const buttonSend = document.getElementById('request-send');
+      buttonSend.onclick = () => {
+        detective.applyRequest(inputUrl.value);
+      };
       detective.fillRequestTypes(selectRequest);
 
       let request = detective.requestTypes[0];

@@ -1,9 +1,9 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import { takeUntil } from 'rxjs';
-import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as vscode from 'vscode';
 
 import { ApiService } from './services/api-service';
 import { DetectiveAPI } from './components/detective.api/detective-api';
