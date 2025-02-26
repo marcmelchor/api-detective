@@ -7,34 +7,51 @@
     <link rel="stylesheet" type="text/css" id="componen-css" href="" />
   </head>
   <body>
-    <div class="header">
-      <h1 class="title">API Detective</h1>
-    </div>
-    <div class="request-container">
-      <div class="request-editor">
-        <input class="request-input" id="request-editor" type="text" />
-        <button>Send</button>
+    <div class="extension-container">
+      <div class="header">
+        <h1 class="title">API Detective</h1>
+      </div>
+      <div class="request-container">
+        <div class="request-editor">
+          <label for="request-type-select"></label>
+          <select
+            class="request-select"
+            id="request-dropdown"
+            name="request-type-select">
+          </select>
+          <input class="request-input" id="request-editor" type="text" />
+          <button id="request-send">Send</button>
+        </div>
       </div>
     </div>
-
-
-    <script type="module" id="detective-api"></script>
-
-    <script type="module">
-      import { DetectiveAPI } from './detective-api.js';
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const detective = new DetectiveAPI();
-        const editor = document.getElementById('request-editor');
-        detective.getRequestType()
-          .subscribe(type => {
-            editor.value = type;
-          });
-
-        setTimeout(() => {
-          detective.api.changeType('POST');
-        }, 3000);
-      });
-    </script>
   </body>
+
+  <script type="module" id="detective-api">
+    import { DetectiveAPI } from './detective-api.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const detective = new DetectiveAPI();
+
+      const selectRequest = document.getElementById('request-dropdown');
+      const inputUrl = document.getElementById('request-editor');
+      const buttonSend = document.getElementById('request-send');
+      buttonSend.onclick = () => {
+        detective.applyRequest(inputUrl.value);
+      };
+      detective.fillRequestTypes(selectRequest);
+
+      let request = detective.requestTypes[0];
+      detective.getRequestType()
+        .subscribe(type => {
+          request = type;
+          for (const option of selectRequest.children) {
+            if (option.value === request) {
+              option.selected = true;
+            } else {
+              option.selected = false;
+            }
+          }
+        });
+    });
+  </script>
 </html>
