@@ -2,9 +2,12 @@ import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 export enum RequestTypes {
   GET = 'GET',
-  PUT = 'PUT',
   POST = 'POST',
-  DELETE = 'DELETE'
+  PUT = 'PUT',
+  PATCH = 'PATCH',
+  DELETE = 'DELETE',
+  HEAD = 'HEAD',
+  OPTIONS = 'OPTIONS'
 }
 
 export class ApiService {
