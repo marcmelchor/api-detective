@@ -30,25 +30,18 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 			);
 			const html = vscode.Uri.file(
-				path.join(context.extensionPath, 'src/components/detective.api', 'detective-api.html')
+				path.join(context.extensionPath, 'src', 'extension.html')
 			);
 
 			const componentJsUri = panel.webview.asWebviewUri(
-				vscode.Uri.file(path.join(context.extensionPath, 'dist', 'detective.api', 'detective-api.js'))
-			);
-			const componentCssUri = panel.webview.asWebviewUri(
-				vscode.Uri.file(path.join(context.extensionPath, 'dist', 'detective.api', 'detective-api.css'))
+				vscode.Uri.file(path.join(context.extensionPath, 'dist', 'detective-api', 'index.js'))
 			);
 			let componentHTML = fs.readFileSync(html.fsPath, 'utf-8');
 
 			componentHTML = componentHTML
 				.replace(
-					"import { DetectiveAPI } from './detective-api.js';",
+					"import { DetectiveAPI } from './index.js';",
 					`import { DetectiveAPI } from '${ componentJsUri }';`
-				)
-				.replace(
-					'href=""',
-					`href=${ componentCssUri }`
 				);
 			panel.webview.html = componentHTML;
 		})

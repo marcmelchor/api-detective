@@ -51,10 +51,10 @@ const extensionConfig = {
 const componentTS = {
   target: 'node',
   mode: 'development',
-  entry: './src/components/detective.api/detective-api.ts',
+  entry: './src/components/detective-api/index.ts',
   output: {
-    path: path.resolve(__dirname, 'dist', 'detective.api'),
-    filename: 'detective-api.js',
+    path: path.resolve(__dirname, 'dist', 'detective-api'),
+    filename: 'index.js',
     libraryTarget: 'module'
   },
   experiments: {
@@ -64,7 +64,7 @@ const componentTS = {
     vscode: 'commonjs vscode'
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js', '.css']
   },
   module: {
     rules: [
@@ -76,20 +76,31 @@ const componentTS = {
             loader: 'ts-loader'
           }
         ]
-      }
+      },
+      {
+        test: /\.css$/i,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                exportOnlyLocals: false,
+              },
+              importLoaders: 1,
+              esModule: true
+            },
+          },
+        ],
+      },
     ]
   },
   devtool: 'nosources-source-map',
   infrastructureLogging: {
     level: "log",
   },
-  plugins: [
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: 'src/components/detective.api/detective-api.css', to: './' }
-      ]
-    }),
-  ]
 };
 
 module.exports = [ extensionConfig, componentTS ];
