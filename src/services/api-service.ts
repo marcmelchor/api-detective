@@ -1,6 +1,5 @@
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
-
 export enum RequestTypes {
   GET = 'GET',
   POST = 'POST',
@@ -10,6 +9,7 @@ export enum RequestTypes {
   HEAD = 'HEAD',
   OPTIONS = 'OPTIONS'
 }
+
 
 export class ApiService {
   private _requestType$ = new BehaviorSubject<RequestTypes>(RequestTypes.GET);
