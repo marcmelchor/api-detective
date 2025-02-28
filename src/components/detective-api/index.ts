@@ -1,19 +1,14 @@
-import sheet from './style';
+import './style.module.css';
 
 
 export class DetectiveAPI extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-    if (this.shadowRoot) {
-      const sheet = new CSSStyleSheet();
-      sheet.replaceSync(`.d-flex { display: flex; justify-content: end; width: 100%; }`);
-      this.shadowRoot.adoptedStyleSheets = [ sheet ];
-      const p = document.createElement('p');
-      p.innerText = 'Hello from Detective API';
-      p.classList.add('d-flex');
-      this.shadowRoot.appendChild(p);
-    }
+
+    const p = document.createElement('p');
+    p.innerText = 'Hello from Detective API';
+    p.classList.add('d-flex');
+    this.appendChild(p);
   }
 
   static readonly HTML_TAG = 'detective-api';
