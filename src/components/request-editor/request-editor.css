@@ -1,0 +1,23 @@
+.request-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.request-editor {
+  width: 100%;
+  padding: 1em;
+}
+
+.request-input {
+  min-width: 80%;
+  border-radius: 1px;
+  border: 3px;
+}
+
+.request-select {
+  border: 1px;
+  border-color: darkslateblue;
+  border-radius: 3px;
+}
