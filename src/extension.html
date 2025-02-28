@@ -9,9 +9,11 @@
 
       document.addEventListener('DOMContentLoaded', () => {
         const detective = new DetectiveAPI();
-        detective.classList.add('extension-container');
+        const detectiveComponent = detective.create();
+
+        detectiveComponent.classList.add('extension-container');
         const container = document.getElementById('container');
-        container.appendChild(detective);
+        container.appendChild(detectiveComponent);
       });
     </script>
   </head>

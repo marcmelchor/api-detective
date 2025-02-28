@@ -47,7 +47,7 @@ const extensionConfig = {
 const componentTS = {
   target: 'node',
   mode: 'development',
-  entry: './src/components/detective-api/index.ts',
+  entry: './src/components/index.ts',
   output: {
     path: path.resolve(__dirname, 'dist', 'detective-api'),
     filename: 'index.js',
