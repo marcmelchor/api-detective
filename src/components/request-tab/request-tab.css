@@ -7,13 +7,13 @@
 @property --request-tab-color {
   syntax: "<color>";
   inherits: false;
-  initial-value: #d0c9bb;
+  initial-value: #828282;
 }
 
 @property --request-tab-color-active {
   syntax: "<color>";
   inherits: false;
-  initial-value: #edede7;
+  initial-value: #595959;
 }
 
 .request-tab-container {

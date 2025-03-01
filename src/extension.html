@@ -11,7 +11,7 @@
 
       document.addEventListener('DOMContentLoaded', () => {
         const detective = new DetectiveAPI();
-        const detectiveComponent = detective.create();
+        const detectiveComponent = detective.init();
 
         detectiveComponent.classList.add('extension-container');
         const container = document.getElementById('container');

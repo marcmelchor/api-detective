@@ -19,7 +19,7 @@ export class RequestEditor extends HTMLElement {
   private requestTypes = Object.keys(RequestTypes);
   private select!: HTMLSelectElement;
 
-  create() {
+  init() {
     const requestEditor = document.createElement(RequestEditor.HTML_TAG) as RequestEditor;
     this.buildComponent(requestEditor);
     return requestEditor;
@@ -31,9 +31,7 @@ export class RequestEditor extends HTMLElement {
     const selectLabelContainer = document.createElement('div');
     selectLabelContainer.classList.add('request-editor-select-label');
 
-    const label = document.createElement('label');
-    label.setAttribute('for', 'request-type-select');
-    selectLabelContainer.appendChild(label);
+    selectLabelContainer.insertAdjacentHTML('afterbegin',`<label for="request-type-select"></label>`);
 
     this.select = document.createElement('select');
     this.select.classList.add('request-editor-select');
@@ -61,10 +59,7 @@ export class RequestEditor extends HTMLElement {
   private fillRequestTypes() {
     this.requestTypes
       .forEach(request => {
-        const option = document.createElement('option');
-        option.value = request;
-        option.innerHTML = request;
-        this.select.appendChild(option);
+        this.select.insertAdjacentHTML('beforeend', `<option value="${ request }">${ request }</option>`);
       });
       this.select.onchange = () => {
         this.api.changeType(this.select.value as RequestTypes);

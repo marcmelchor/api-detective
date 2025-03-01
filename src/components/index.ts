@@ -10,7 +10,7 @@ export class DetectiveAPI extends HTMLElement {
     super();
   }
 
-  create() {
+  init() {
     const detectiveApi = document.createElement(DetectiveAPI.HTML_TAG) as DetectiveAPI;
     this.buildDetectiveApi(detectiveApi);
 
@@ -19,7 +19,7 @@ export class DetectiveAPI extends HTMLElement {
 
   private buildDetectiveApi(detectiveApi: DetectiveAPI) {
     const requestEditor = new RequestEditor();
-    const requestEditorComponent = requestEditor.create();
+    const requestEditorComponent = requestEditor.init();
     detectiveApi.appendChild(requestEditorComponent);
 
     const requestTabs = new RequestTab();

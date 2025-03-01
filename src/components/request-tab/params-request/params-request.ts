@@ -36,28 +36,23 @@ export class ParamsRequest extends HTMLElement {
 
     const paramsBody = document.createElement('div');
     paramsBody.classList.add('params-request-body');
+    this.createHeader(container, paramsBody);
 
-    const header = document.createElement('div');
-    header.classList.add('params-request-header');
-
-    const key = document.createElement('span');
-    key.classList.add('params-request-header-key-value');
-    key.innerHTML = 'Key';
-    header.appendChild(key);
-
-    const value = document.createElement('span');
-    value.classList.add('params-request-header-key-value');
-    value.innerHTML = 'Value';
-    header.appendChild(value);
-
-    const actions = document.createElement('span');
-    actions.classList.add('params-request-header-actions');
-    actions.innerHTML = 'Actions';
-    header.appendChild(actions);
-
-    paramsBody.appendChild(header);
-    container.appendChild(paramsBody);
     paramsRequest.appendChild(container);
+  }
+
+  private createHeader(container: HTMLDivElement, paramsBody: HTMLDivElement) {
+    paramsBody.insertAdjacentHTML(
+      'afterbegin',
+      `
+        <div class="params-request-header">
+          <span class="params-request-header-key-value">Key</span>
+          <span class="params-request-header-key-value">Value</span>
+          <span class="params-request-header-actions">Actions</span>
+        </div>
+      `
+    );
+    container.appendChild(paramsBody);
   }
 }
 

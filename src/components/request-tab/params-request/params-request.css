@@ -21,10 +21,10 @@
 
 .params-request-header {
   display: flex;
-  width: 25em;
+  width: 38em;
 
   .params-request-header-key-value {
-    width: 10em;
+    width: 15em;
     font-weight: bold;
     padding: 0.5em 0 0.5em 0.5em;
     border: 0.5px dashed var(--request-tab-color);
@@ -32,7 +32,7 @@
   }
 
   .params-request-header-actions {
-    width: 5em;
+    width: 8em;
     font-weight: bold;
     padding: 0.5em 0 0.5em 0.3em;
     border: 0.5px dashed var(--request-tab-color);

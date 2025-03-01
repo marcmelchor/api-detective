@@ -50,9 +50,7 @@ export class RequestTab extends HTMLElement {
         tabContainer.id = tab;
         tabContainer.classList.add('request-tab');
 
-        const tabSpan = document.createElement('span');
-        tabSpan.innerHTML = tab;
-        tabContainer.appendChild(tabSpan);
+        tabContainer.insertAdjacentHTML('afterbegin', `<span>${ tab }</span>`);
         tabContainer.onclick = () => {
           this.api.changeRequestTab(tabContainer.id as RequestTabs);
         };
