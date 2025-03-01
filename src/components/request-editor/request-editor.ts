@@ -26,24 +26,24 @@ export class RequestEditor extends HTMLElement {
   }
 
   private buildComponent(requestEditor: RequestEditor) {
-    this.classList.add('request-container');
+    requestEditor.classList.add('request-editor-container');
 
     const selectLabelContainer = document.createElement('div');
-    selectLabelContainer.classList.add('select-label');
+    selectLabelContainer.classList.add('request-editor-select-label');
 
     const label = document.createElement('label');
     label.setAttribute('for', 'request-type-select');
     selectLabelContainer.appendChild(label);
 
     this.select = document.createElement('select');
-    this.select.classList.add('request-select');
-    this.select.name = 'request-type-select';
+    this.select.classList.add('request-editor-select');
+    this.select.id = 'request-type-select';
     this.fillRequestTypes();
     selectLabelContainer.appendChild(this.select);
     this.observeRequestType();
 
     this.input = document.createElement('input');
-    this.input.classList.add('request-input');
+    this.input.classList.add('request-editor-input');
     this.input.type = 'text';
     selectLabelContainer.appendChild(this.input);
 
@@ -51,7 +51,7 @@ export class RequestEditor extends HTMLElement {
 
     this.button = document.createElement('button');
     this.button.innerHTML = 'Send';
-    this.button.classList.add('send-button');
+    this.button.classList.add('request-editor-button');
     requestEditor.appendChild(this.button);
     this.button.onclick = () => {
       this.applyRequest(this.input.value);
@@ -62,7 +62,6 @@ export class RequestEditor extends HTMLElement {
     this.requestTypes
       .forEach(request => {
         const option = document.createElement('option');
-        option.id = `dropdown-request-${ request }`;
         option.value = request;
         option.innerHTML = request;
         this.select.appendChild(option);
@@ -91,7 +90,7 @@ export class RequestEditor extends HTMLElement {
   }
 
   private observeRequestType() {
-    return this.api.requestType$
+    this.api.requestType$
       .pipe(takeUntil(this.api.unsubscribeNotifier()))
       .subscribe(type => {
         for (const option of (Array.from(this.select.children) as HTMLOptionElement[])) {

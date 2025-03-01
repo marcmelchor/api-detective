@@ -1,4 +1,5 @@
 import { RequestEditor } from './request-editor/request-editor';
+import { RequestTab } from './request-tab/request-tab';
 import './style.css';
 
 
@@ -19,8 +20,11 @@ export class DetectiveAPI extends HTMLElement {
   private buildDetectiveApi(detectiveApi: DetectiveAPI) {
     const requestEditor = new RequestEditor();
     const requestEditorComponent = requestEditor.create();
-    requestEditorComponent.classList.add('request-editor');
     detectiveApi.appendChild(requestEditorComponent);
+
+    const requestTabs = new RequestTab();
+    const requestTabsComponent = requestTabs.create();
+    detectiveApi.appendChild(requestTabsComponent);
   }
 }
 
