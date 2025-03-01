@@ -1,23 +1,49 @@
-.request-container {
+@property --request-editor-main-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #007ACC;
+}
+
+.request-editor-container {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  height: 2em;
 }
 
-.request-editor {
-  width: 100%;
-  padding: 1em;
+.request-editor-input {
+  flex: 1;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  border-radius: 0 5px 5px 0;
+  text-indent: 0.5em;
 }
 
-.request-input {
-  min-width: 80%;
-  border-radius: 1px;
-  border: 3px;
+.request-editor-select {
+  height: 100%;
+  border: 0;
+  border-radius: 5px 0 0 5px;
+  border-right: 1px solid var(--request-editor-main-color);
+  cursor: pointer;
 }
 
-.request-select {
-  border: 1px;
-  border-color: darkslateblue;
-  border-radius: 3px;
+.request-editor-select-label {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  height: 100%;
+  margin-right: 1em;
+  border: 1px solid var(--request-editor-main-color);
+  border-radius: 5px;
+}
+
+.request-editor-button {
+  width: 8em;
+  height: 100%;
+  border-radius: 5px;
+  border: 0;
+  background-color: var(--request-editor-main-color);
+  color: white;
+  cursor: pointer;
 }
