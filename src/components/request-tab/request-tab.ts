@@ -1,6 +1,7 @@
 import { takeUntil } from 'rxjs';
 
 import { ApiService, RequestTabs } from '../../services/api-service';
+import { ParamsRequest } from './params-request/params-request';
 import './request-tab.css';
 
 
@@ -20,6 +21,10 @@ export class RequestTab extends HTMLElement {
     const requestTab = document.createElement(RequestTab.HTML_TAG) as RequestTab;
     this.buildComponent(requestTab);
 
+    const paramsRequest = new ParamsRequest();
+    const paramsComponent = paramsRequest.create();
+    requestTab.appendChild(paramsComponent);
+
     return requestTab;
   }
 
@@ -30,6 +35,9 @@ export class RequestTab extends HTMLElement {
     tabsContainer.classList.add('request-tabs');
     this.fillTabs(tabsContainer);
     requestTab.appendChild(tabsContainer);
+
+    const spaceTabContainer = document.createElement('div');
+    spaceTabContainer.classList.add('space-tab-container');
   }
 
   private fillTabs(tabsContainer: HTMLDivElement) {
