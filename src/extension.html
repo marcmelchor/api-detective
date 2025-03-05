@@ -3,19 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
     <title>API Detective</title>
     <script type="module" id="detective-api">
       import { DetectiveAPI } from './index.js';
 
+      const detective = new DetectiveAPI();
+
       document.addEventListener('DOMContentLoaded', () => {
-        const detective = new DetectiveAPI();
         const detectiveComponent = detective.init();
 
         detectiveComponent.classList.add('extension-container');
         const container = document.getElementById('container');
         container.appendChild(detectiveComponent);
+      });
+
+      document.addEventListener('beforeunload', ev => {
+        ev.preventDefault();
+        detective.api.stopSubscriptions();
       });
     </script>
   </head>

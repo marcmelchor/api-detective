@@ -8,21 +8,18 @@ import './request-tab.css';
 export class RequestTab extends HTMLElement {
   static readonly HTML_TAG = 'request-tab';
 
-  constructor() {
+  constructor(private api: ApiService) {
     super();
-
-    this.api = new ApiService();
   }
 
-  private api!: ApiService;
   private requestTabs = Object.keys(RequestTabs);
 
-  create() {
+  init() {
     const requestTab = document.createElement(RequestTab.HTML_TAG) as RequestTab;
     this.buildComponent(requestTab);
 
-    const paramsRequest = new ParamsRequest();
-    const paramsComponent = paramsRequest.create();
+    const paramsRequest = new ParamsRequest(this.api);
+    const paramsComponent = paramsRequest.init();
     requestTab.appendChild(paramsComponent);
 
     return requestTab;

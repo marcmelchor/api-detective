@@ -7,13 +7,10 @@ import './request-editor.css';
 export class RequestEditor extends HTMLElement {
   static readonly HTML_TAG = 'request-editor';
 
-  constructor() {
+  constructor(private api: ApiService) {
     super();
-
-    this.api = new ApiService();
   }
 
-  private api!: ApiService;
   private button!: HTMLButtonElement;
   private input!: HTMLInputElement;
   private requestTypes = Object.keys(RequestTypes);

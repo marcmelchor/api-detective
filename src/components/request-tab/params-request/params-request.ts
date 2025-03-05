@@ -7,16 +7,12 @@ import './params-request.css';
 export class ParamsRequest extends HTMLElement {
   static readonly HTML_TAG = 'params-request';
 
-  constructor() {
+  constructor(private api: ApiService) {
     super();
-
-    this.api = new ApiService();
   }
-
-  private api!: ApiService;
   private queryParams: QueryParams = {};
 
-  create() {
+  init() {
     const paramsRequest = document.createElement(ParamsRequest.HTML_TAG) as ParamsRequest;
     this.buildComponent(paramsRequest);
 
@@ -55,23 +51,26 @@ export class ParamsRequest extends HTMLElement {
   }
 
   private subOnRequestUrl() {
-    this.api.requestUrl$
+    this.api._requestUrl$
+      .asObservable()
       .pipe(takeUntil(this.api.unsubscribeNotifier()))
       .subscribe(url => {
-        console.log('URL', url, url.length);
         if (!url || !url.length) {
           this.queryParams = {};
-        } else {
-          const params = url.split('?')[1];
-          console.log('PPP', params);
-  
-          params.split('&')
-            .forEach((query, idx) => {
-              const queryKeyValue = query.split('=');
-              this.queryParams[idx] = { key: queryKeyValue[0], value: queryKeyValue[1] };
-            });
-          console.log('....', this.queryParams);
+          return;
         }
+
+        const params = url.split('?')[1];
+        if (!params || !params.length) {
+          this.queryParams = {};
+          return;
+        }
+
+        params.split('&')
+          .forEach((query, idx) => {
+            const queryKeyValue = query.split('=');
+            this.queryParams[idx] = { key: queryKeyValue[0], value: queryKeyValue[1] };
+          });
       });
   }
 }
