@@ -24,11 +24,12 @@ export class ApiService {
   private _requestTab$ = new BehaviorSubject<RequestTabs>(RequestTabs.Params);
   private _requestType$ = new BehaviorSubject<RequestTypes>(RequestTypes.GET);
   private _response$ = new BehaviorSubject<Record<string, string | number | Record<string, string | number>>>({});
+  private _requestUrl$ = new BehaviorSubject<string>('');
   private unsubscribe$ = new ReplaySubject<void>(1);
-  
-  _requestUrl$ = new BehaviorSubject<string>('');
+
   requestTab$ = this._requestTab$.asObservable();
   requestType$ = this._requestType$.asObservable();
+  requestUrl$ = this._requestUrl$.asObservable();
   response$ = this._response$.asObservable();
 
   request(url: string, method: RequestTypes, body?: string, headers?: Record<string, string>) {

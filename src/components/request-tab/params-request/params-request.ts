@@ -51,8 +51,7 @@ export class ParamsRequest extends HTMLElement {
   }
 
   private subOnRequestUrl() {
-    this.api._requestUrl$
-      .asObservable()
+    this.api.requestUrl$
       .pipe(takeUntil(this.api.unsubscribeNotifier()))
       .subscribe(url => {
         if (!url || !url.length) {
