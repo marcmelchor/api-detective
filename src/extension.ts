@@ -4,10 +4,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
 
-import { ApiService } from './services/api-service';
-
-
-const apiService = new ApiService();
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -41,5 +37,4 @@ export function activate(context: vscode.ExtensionContext) {
 
 // This method is called when your extension is deactivated
 export function deactivate() {
-	apiService.stopSubscriptions();
 }

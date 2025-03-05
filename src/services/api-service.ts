@@ -17,13 +17,16 @@ export enum RequestTabs {
   Body = 'Body'
 }
 
+export type QueryParams = Record<number, { key: string; value: string; }>;
+
 
 export class ApiService {
   private _requestTab$ = new BehaviorSubject<RequestTabs>(RequestTabs.Params);
   private _requestType$ = new BehaviorSubject<RequestTypes>(RequestTypes.GET);
   private _response$ = new BehaviorSubject<Record<string, string | number | Record<string, string | number>>>({});
   private unsubscribe$ = new ReplaySubject<void>(1);
-
+  
+  _requestUrl$ = new BehaviorSubject<string>('');
   requestTab$ = this._requestTab$.asObservable();
   requestType$ = this._requestType$.asObservable();
   response$ = this._response$.asObservable();
@@ -38,6 +41,10 @@ export class ApiService {
 
   changeType(type: RequestTypes) {
     this._requestType$.next(type);
+  }
+
+  changeRequestUrl(url: string) {
+    this._requestUrl$.next(url);
   }
 
   stopSubscriptions() {

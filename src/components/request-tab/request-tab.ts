@@ -1,24 +1,26 @@
 import { takeUntil } from 'rxjs';
 
 import { ApiService, RequestTabs } from '../../services/api-service';
+import { ParamsRequest } from './params-request/params-request';
 import './request-tab.css';
 
 
 export class RequestTab extends HTMLElement {
   static readonly HTML_TAG = 'request-tab';
 
-  constructor() {
+  constructor(private api: ApiService) {
     super();
-
-    this.api = new ApiService();
   }
 
-  private api!: ApiService;
   private requestTabs = Object.keys(RequestTabs);
 
-  create() {
+  init() {
     const requestTab = document.createElement(RequestTab.HTML_TAG) as RequestTab;
     this.buildComponent(requestTab);
+
+    const paramsRequest = new ParamsRequest(this.api);
+    const paramsComponent = paramsRequest.init();
+    requestTab.appendChild(paramsComponent);
 
     return requestTab;
   }
@@ -30,6 +32,9 @@ export class RequestTab extends HTMLElement {
     tabsContainer.classList.add('request-tabs');
     this.fillTabs(tabsContainer);
     requestTab.appendChild(tabsContainer);
+
+    const spaceTabContainer = document.createElement('div');
+    spaceTabContainer.classList.add('space-tab-container');
   }
 
   private fillTabs(tabsContainer: HTMLDivElement) {
@@ -42,9 +47,7 @@ export class RequestTab extends HTMLElement {
         tabContainer.id = tab;
         tabContainer.classList.add('request-tab');
 
-        const tabSpan = document.createElement('span');
-        tabSpan.innerHTML = tab;
-        tabContainer.appendChild(tabSpan);
+        tabContainer.insertAdjacentHTML('afterbegin', `<span>${ tab }</span>`);
         tabContainer.onclick = () => {
           this.api.changeRequestTab(tabContainer.id as RequestTabs);
         };
