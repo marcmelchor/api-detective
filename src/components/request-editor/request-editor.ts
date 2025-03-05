@@ -43,6 +43,7 @@ export class RequestEditor extends HTMLElement {
     this.input = document.createElement('input');
     this.input.classList.add('request-editor-input');
     this.input.type = 'text';
+    this.input.addEventListener('input', this.handleInput.bind(this));
     selectLabelContainer.appendChild(this.input);
 
     requestEditor.appendChild(selectLabelContainer);
@@ -54,6 +55,11 @@ export class RequestEditor extends HTMLElement {
     this.button.onclick = () => {
       this.applyRequest(this.input.value);
     };
+  }
+
+  private handleInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.api.changeRequestUrl(value);
   }
 
   private fillRequestTypes() {

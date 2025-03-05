@@ -1,10 +1,8 @@
-import { ApiService } from '../../../services/api-service';
+import { takeUntil } from 'rxjs';
+
+import { ApiService, QueryParams } from '../../../services/api-service';
 import './params-request.css';
 
-type Params = {
-  key: string;
-  value: string;
-}
 
 export class ParamsRequest extends HTMLElement {
   static readonly HTML_TAG = 'params-request';
@@ -16,7 +14,7 @@ export class ParamsRequest extends HTMLElement {
   }
 
   private api!: ApiService;
-  private params = new Map<string, Params>();
+  private queryParams: QueryParams = {};
 
   create() {
     const paramsRequest = document.createElement(ParamsRequest.HTML_TAG) as ParamsRequest;
@@ -39,6 +37,7 @@ export class ParamsRequest extends HTMLElement {
     this.createHeader(container, paramsBody);
 
     paramsRequest.appendChild(container);
+    this.subOnRequestUrl();
   }
 
   private createHeader(container: HTMLDivElement, paramsBody: HTMLDivElement) {
@@ -53,6 +52,27 @@ export class ParamsRequest extends HTMLElement {
       `
     );
     container.appendChild(paramsBody);
+  }
+
+  private subOnRequestUrl() {
+    this.api.requestUrl$
+      .pipe(takeUntil(this.api.unsubscribeNotifier()))
+      .subscribe(url => {
+        console.log('URL', url, url.length);
+        if (!url || !url.length) {
+          this.queryParams = {};
+        } else {
+          const params = url.split('?')[1];
+          console.log('PPP', params);
+  
+          params.split('&')
+            .forEach((query, idx) => {
+              const queryKeyValue = query.split('=');
+              this.queryParams[idx] = { key: queryKeyValue[0], value: queryKeyValue[1] };
+            });
+          console.log('....', this.queryParams);
+        }
+      });
   }
 }
 
