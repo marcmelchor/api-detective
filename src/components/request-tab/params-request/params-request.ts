@@ -69,12 +69,14 @@ export class ParamsRequest extends HTMLElement {
       .subscribe(url => {
         if (!url || !url.length) {
           this.queryParams = {};
+          this.body.innerHTML = '';
           return;
         }
 
         const params = url.split('?')[1];
         if (!params || !params.length) {
           this.queryParams = {};
+          this.body.innerHTML = '';
           return;
         }
 
@@ -103,7 +105,6 @@ export class ParamsRequest extends HTMLElement {
               </div>
             `);
           });
-        console.log('ITEMS', items);
         this.body.innerHTML = items.join('');
       });
   }
