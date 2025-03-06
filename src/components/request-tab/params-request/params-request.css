@@ -38,3 +38,33 @@
     border: 0.5px dashed var(--request-tab-color);
   }
 }
+
+.params-request-items {
+  display: flex;
+  flex-direction: column;
+  width: 38em;
+
+  .row {
+    display: flex;
+    width: 100%;
+  }
+
+  .item-key-value {
+    width: 15em;
+    padding: 0.5em 0 0.5em 0.5em;
+    border: 0.5px dashed var(--request-tab-color);
+    border-right: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .item-actions {
+    width: 8em;
+    padding: 0.5em 0 0.5em 0.3em;
+    border: 0.5px dashed var(--request-tab-color);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}

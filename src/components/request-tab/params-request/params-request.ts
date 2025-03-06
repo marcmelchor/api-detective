@@ -10,6 +10,8 @@ export class ParamsRequest extends HTMLElement {
   constructor(private api: ApiService) {
     super();
   }
+
+  private body!: HTMLDivElement;
   private queryParams: QueryParams = {};
 
   init() {
@@ -30,13 +32,18 @@ export class ParamsRequest extends HTMLElement {
 
     const paramsBody = document.createElement('div');
     paramsBody.classList.add('params-request-body');
-    this.createHeader(container, paramsBody);
+    this.createHeader(paramsBody);
 
+    this.body = document.createElement('div');
+    this.body.classList.add('params-request-items');
+    this.createItems(paramsBody);
+
+    container.appendChild(paramsBody);
     paramsRequest.appendChild(container);
     this.subOnRequestUrl();
   }
 
-  private createHeader(container: HTMLDivElement, paramsBody: HTMLDivElement) {
+  private createHeader(paramsBody: HTMLDivElement) {
     paramsBody.insertAdjacentHTML(
       'afterbegin',
       `
@@ -47,7 +54,13 @@ export class ParamsRequest extends HTMLElement {
         </div>
       `
     );
-    container.appendChild(paramsBody);
+  }
+
+  private createItems(paramsBody: HTMLDivElement) {
+    paramsBody.insertAdjacentElement(
+      'beforeend',
+      this.body
+    );
   }
 
   private subOnRequestUrl() {
@@ -65,11 +78,33 @@ export class ParamsRequest extends HTMLElement {
           return;
         }
 
+        this.queryParams = {};
         params.split('&')
           .forEach((query, idx) => {
             const queryKeyValue = query.split('=');
             this.queryParams[idx] = { key: queryKeyValue[0], value: queryKeyValue[1] };
           });
+        const items: string[] = [];
+        Object.values(this.queryParams)
+          .forEach(query => {
+            items.push(`
+              <div class="row">
+                <span
+                  class="item-key-value"
+                  title="${ query.key ?? '' }">${ query.key ?? '' }
+                </span>
+                <span
+                  class="item-key-value"
+                  title="${ query.value ?? '' }">${ query.value ?? '' }
+                </span>
+                <span class="item-actions">
+                  <img src="" />
+                </span>
+              </div>
+            `);
+          });
+        console.log('ITEMS', items);
+        this.body.innerHTML = items.join('');
       });
   }
 }

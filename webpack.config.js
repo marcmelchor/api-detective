@@ -35,6 +35,10 @@ const extensionConfig = {
           },
         ],
       },
+      {
+        test: /\.svg$/,
+        type: 'asset/resource'
+      }
     ],
   },
   devtool: 'nosources-source-map',
