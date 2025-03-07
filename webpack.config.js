@@ -22,7 +22,7 @@ const extensionConfig = {
     vscode: 'commonjs vscode',
   },
   resolve: {
-    extensions: ['.ts', '.js', '.svg'],
+    extensions: ['.ts', '.js'],
   },
   module: {
     rules: [

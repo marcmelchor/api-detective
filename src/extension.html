@@ -3,26 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>API Detective</title>
-    <script type="module" id="detective-api">
-      import { DetectiveAPI } from './index.js';
-
-      const detective = new DetectiveAPI();
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const detectiveComponent = detective.init();
-
-        detectiveComponent.classList.add('extension-container');
-        const container = document.getElementById('container');
-        container.appendChild(detectiveComponent);
-      });
-
-      document.addEventListener('beforeunload', ev => {
-        ev.preventDefault();
-        detective.api.stopSubscriptions();
-      });
-    </script>
   </head>
   <body>
     <div class="extension-container">
@@ -34,6 +15,25 @@
     </div>
   </body>
 </html>
+
+<script type="module" id="detective-api">
+  import { DetectiveAPI } from './index.js';
+
+  const detective = new DetectiveAPI();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const detectiveComponent = detective.init();
+
+    detectiveComponent.classList.add('extension-container');
+    const container = document.getElementById('container');
+    container.appendChild(detectiveComponent);
+  });
+
+  document.addEventListener('beforeunload', ev => {
+    ev.preventDefault();
+    detective.api.stopSubscriptions();
+  });
+</script>
 
 <style>
   .extension-container {
