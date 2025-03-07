@@ -1,5 +1,8 @@
 import { takeUntil } from 'rxjs';
 
+import addIcon from '../../../assets/icons/add.svg';
+import deleteIcon from '../../../assets/icons/delete.svg';
+
 import { ApiService, QueryParams } from '../../../services/api-service';
 import './params-request.css';
 
@@ -50,7 +53,7 @@ export class ParamsRequest extends HTMLElement {
         <div class="params-request-header">
           <span class="params-request-header-key-value">Key</span>
           <span class="params-request-header-key-value">Value</span>
-          <span class="params-request-header-actions">Actions</span>
+          <div class="params-request-header-actions"></div>
         </div>
       `
     );
@@ -67,16 +70,23 @@ export class ParamsRequest extends HTMLElement {
     this.api.requestUrl$
       .pipe(takeUntil(this.api.unsubscribeNotifier()))
       .subscribe(url => {
+        const addQuery = `
+          <div class="add-query">
+            <img
+              src="${ addIcon }"
+              title="Add query parameter" />
+          </div>
+        `;
         if (!url || !url.length) {
           this.queryParams = {};
-          this.body.innerHTML = '';
+          this.body.innerHTML = addQuery;
           return;
         }
 
         const params = url.split('?')[1];
         if (!params || !params.length) {
           this.queryParams = {};
-          this.body.innerHTML = '';
+          this.body.innerHTML = addQuery;
           return;
         }
 
@@ -100,12 +110,14 @@ export class ParamsRequest extends HTMLElement {
                   title="${ query.value ?? '' }">${ query.value ?? '' }
                 </span>
                 <span class="item-actions">
-                  <img src="" />
+                  <img
+                    src="${ deleteIcon }"
+                    title="Remove query parameter" />
                 </span>
               </div>
             `);
           });
-        this.body.innerHTML = items.join('');
+        this.body.innerHTML = items.join('') + addQuery;
       });
   }
 }

@@ -22,7 +22,7 @@ const extensionConfig = {
     vscode: 'commonjs vscode',
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.js', '.svg'],
   },
   module: {
     rules: [
@@ -35,10 +35,6 @@ const extensionConfig = {
           },
         ],
       },
-      {
-        test: /\.svg$/,
-        type: 'asset/resource'
-      }
     ],
   },
   devtool: 'nosources-source-map',
@@ -81,6 +77,10 @@ const componentTS = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
         exclude: /node_modules/,
+      },
+      {
+        test: /\.svg$/,
+        type: 'asset/resource'
       },
     ],
   },
