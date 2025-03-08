@@ -74,6 +74,7 @@ export class ParamsRequest extends HTMLElement {
 
         const addQuery = document.createElement('div');
         addQuery.classList.add('add-query');
+
         const add = document.createElement('img');
         add.onclick = () => this.addQueryParam(url);
         add.src = addIcon;
@@ -113,9 +114,11 @@ export class ParamsRequest extends HTMLElement {
 
         const key = document.createElement('div');
         key.classList.add('item-key-value');
+
         const keyInput = document.createElement('input');
         keyInput.classList.add('color-param-key');
         keyInput.value = query.key ?? '';
+        keyInput.oninput = (ev) => this.onInputChange(ev, index, 'key', url);
         key.appendChild(keyInput);
         row.appendChild(key);
 
@@ -123,6 +126,7 @@ export class ParamsRequest extends HTMLElement {
         value.classList.add('item-key-value');
         const valueInput = document.createElement('input');
         valueInput.value = query.value ?? '';
+        valueInput.oninput = (ev) => this.onInputChange(ev, index, 'value', url);
         value.appendChild(valueInput);
         row.appendChild(value);
 
@@ -161,6 +165,21 @@ export class ParamsRequest extends HTMLElement {
 
     url += '&';
     this.api.changeRequestUrl(url);
+  }
+
+  private onInputChange(ev: Event, index: number, type: 'key' | 'value', url: string) {
+    const newValue = (ev.target as HTMLInputElement).value;
+    console.log('newValue', newValue);
+
+    this.queryParams[index][type] = newValue;
+    const plainQueryParams = Object.values(this.queryParams)
+      .reduce((acc, current) => {
+        return acc += `${ current.key }=${ current.value }`;
+      }, '');
+
+    const plainUrl = url.split('?')[0];
+
+    this.api.changeRequestUrl(`${ plainUrl }?${ plainQueryParams }`);
   }
 }
 
