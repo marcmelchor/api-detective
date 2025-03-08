@@ -70,23 +70,25 @@ export class ParamsRequest extends HTMLElement {
     this.api.requestUrl$
       .pipe(takeUntil(this.api.unsubscribeNotifier()))
       .subscribe(url => {
-        const addQuery = `
-          <div class="add-query">
-            <img
-              src="${ addIcon }"
-              title="Add query parameter" />
-          </div>
-        `;
+        this.body.innerHTML = '';
+
+        const addQuery = document.createElement('div');
+        addQuery.classList.add('add-query');
+        const add = document.createElement('img');
+        add.src = addIcon;
+        add.title = 'Add query parameter';
+        addQuery.appendChild(add);
+
         if (!url || !url.length) {
           this.queryParams = {};
-          this.body.innerHTML = addQuery;
+          this.body.appendChild(addQuery);
           return;
         }
 
         const params = url.split('?')[1];
         if (!params || !params.length) {
           this.queryParams = {};
-          this.body.innerHTML = addQuery;
+          this.body.appendChild(addQuery);
           return;
         }
 
@@ -96,29 +98,52 @@ export class ParamsRequest extends HTMLElement {
             const queryKeyValue = query.split('=');
             this.queryParams[idx] = { key: queryKeyValue[0], value: queryKeyValue[1] };
           });
-        const items: string[] = [];
-        Object.values(this.queryParams)
-          .forEach(query => {
-            items.push(`
-              <div class="row">
-                <span
-                  class="item-key-value"
-                  title="${ query.key ?? '' }">${ query.key ?? '' }
-                </span>
-                <span
-                  class="item-key-value"
-                  title="${ query.value ?? '' }">${ query.value ?? '' }
-                </span>
-                <span class="item-actions">
-                  <img
-                    src="${ deleteIcon }"
-                    title="Remove query parameter" />
-                </span>
-              </div>
-            `);
-          });
-        this.body.innerHTML = items.join('') + addQuery;
+
+        this.buildRows(url);
+        this.body.appendChild(addQuery);
       });
+  }
+
+  private buildRows(url: string) {
+    Object.values(this.queryParams)
+      .forEach((query, index) => {
+        const row = document.createElement('div');
+        row.classList.add('row');
+
+        const key = document.createElement('span');
+        key.classList.add('item-key-value');
+        key.innerHTML = query.key ?? '';
+        row.appendChild(key);
+
+        const value = document.createElement('span');
+        value.classList.add('item-key-value');
+        value.innerHTML = query.value ?? '';
+        row.appendChild(value);
+
+        const actions = document.createElement('div');
+        actions.classList.add('item-actions');
+        const icon = document.createElement('img');
+        icon.onclick = () => this.deleteQueryParam(url, index);
+        icon.src = deleteIcon;
+        icon.title = 'Remove query parameter';
+        actions.appendChild(icon);
+        row.appendChild(actions);
+
+        this.body.appendChild(row);
+      });
+  }
+
+  private deleteQueryParam(url: string, index: number) {
+    const splitUrl = url.split('?');
+
+    const pureUrl = splitUrl[0];
+    const params = splitUrl[1];
+
+    const query = params.split('&')
+      .filter((_, i) => index !== i)
+      .join('&');
+
+    this.api.changeRequestUrl(`${ pureUrl }?${ query }`);
   }
 }
 

@@ -42,6 +42,7 @@ export class RequestEditor extends HTMLElement {
     this.input.type = 'text';
     this.input.addEventListener('input', this.handleInput.bind(this));
     selectLabelContainer.appendChild(this.input);
+    this.observeRequestInput();
 
     requestEditor.appendChild(selectLabelContainer);
 
@@ -99,6 +100,12 @@ export class RequestEditor extends HTMLElement {
           }
         }
       });
+  }
+
+  private observeRequestInput() {
+    this.api.requestUrl$
+      .pipe(takeUntil(this.api.unsubscribeNotifier()))
+      .subscribe(url => this.input.value = url);
   }
 }
 
