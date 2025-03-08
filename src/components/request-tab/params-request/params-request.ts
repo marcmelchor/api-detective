@@ -75,6 +75,7 @@ export class ParamsRequest extends HTMLElement {
         const addQuery = document.createElement('div');
         addQuery.classList.add('add-query');
         const add = document.createElement('img');
+        add.onclick = () => this.addQueryParam(url);
         add.src = addIcon;
         add.title = 'Add query parameter';
         addQuery.appendChild(add);
@@ -86,7 +87,7 @@ export class ParamsRequest extends HTMLElement {
         }
 
         const params = url.split('?')[1];
-        if (!params || !params.length) {
+        if (params === undefined) {
           this.queryParams = {};
           this.body.appendChild(addQuery);
           return;
@@ -144,6 +145,17 @@ export class ParamsRequest extends HTMLElement {
       .join('&');
 
     this.api.changeRequestUrl(`${ pureUrl }?${ query }`);
+  }
+
+  private addQueryParam(url: string) {
+    if (!url.includes('?')) {
+      url += '?';
+      this.api.changeRequestUrl(url);
+      return;
+    }
+
+    url += '&';
+    this.api.changeRequestUrl(url);
   }
 }
 
