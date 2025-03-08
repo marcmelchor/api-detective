@@ -73,9 +73,18 @@
     display: flex;
     align-items: center;
 
-    :first-child {
-      border-right: 0;
+    input {
+      height: 100%;
+      width: 95%;
+      background-color: transparent;
+      border: 1px solid var(--request-editor-background);
+      border-radius: 5px 2px;
+      color: var(--request-editor-main-color);
     }
+  }
+
+  .color-param-key {
+    color: var(--request-tab-active) !important;
   }
 
   .item-actions {

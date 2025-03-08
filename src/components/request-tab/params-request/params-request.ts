@@ -111,14 +111,19 @@ export class ParamsRequest extends HTMLElement {
         const row = document.createElement('div');
         row.classList.add('row');
 
-        const key = document.createElement('span');
+        const key = document.createElement('div');
         key.classList.add('item-key-value');
-        key.innerHTML = query.key ?? '';
+        const keyInput = document.createElement('input');
+        keyInput.classList.add('color-param-key');
+        keyInput.value = query.key ?? '';
+        key.appendChild(keyInput);
         row.appendChild(key);
 
-        const value = document.createElement('span');
+        const value = document.createElement('div');
         value.classList.add('item-key-value');
-        value.innerHTML = query.value ?? '';
+        const valueInput = document.createElement('input');
+        valueInput.value = query.value ?? '';
+        value.appendChild(valueInput);
         row.appendChild(value);
 
         const actions = document.createElement('div');
