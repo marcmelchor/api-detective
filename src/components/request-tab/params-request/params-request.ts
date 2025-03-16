@@ -70,24 +70,28 @@ export class ParamsRequest extends HTMLElement {
     this.api.requestUrl$
       .pipe(takeUntil(this.api.unsubscribeNotifier()))
       .subscribe(url => {
+        if (url.typeOfChange === 'paramsRow') {
+          return;
+        }
+
         this.body.innerHTML = '';
 
         const addQuery = document.createElement('div');
         addQuery.classList.add('add-query');
 
         const add = document.createElement('img');
-        add.onclick = () => this.addQueryParam(url);
+        add.onclick = () => this.addQueryParam(url.url);
         add.src = addIcon;
         add.title = 'Add query parameter';
         addQuery.appendChild(add);
 
-        if (!url || !url.length) {
+        if (!url.url || !url.url.length) {
           this.queryParams = {};
           this.body.appendChild(addQuery);
           return;
         }
 
-        const params = url.split('?')[1];
+        const params = url.url.split('?')[1];
         if (params === undefined) {
           this.queryParams = {};
           this.body.appendChild(addQuery);
@@ -101,7 +105,7 @@ export class ParamsRequest extends HTMLElement {
             this.queryParams[idx] = { key: queryKeyValue[0], value: queryKeyValue[1] };
           });
 
-        this.buildRows(url);
+        this.buildRows(url.url);
         this.body.appendChild(addQuery);
       });
   }
@@ -153,18 +157,18 @@ export class ParamsRequest extends HTMLElement {
       .filter((_, i) => index !== i)
       .join('&');
 
-    this.api.changeRequestUrl(`${ pureUrl }?${ query }`);
+    this.api.changeRequestUrl({ typeOfChange: 'url', url: `${ pureUrl }?${ query }` });
   }
 
   private addQueryParam(url: string) {
     if (!url.includes('?')) {
       url += '?';
-      this.api.changeRequestUrl(url);
+      this.api.changeRequestUrl({ typeOfChange: 'url', url });
       return;
     }
 
     url += '&';
-    this.api.changeRequestUrl(url);
+    this.api.changeRequestUrl({ typeOfChange: 'url', url });
   }
 
   private onInputChange(ev: Event, index: number, type: 'key' | 'value', url: string) {
@@ -179,7 +183,10 @@ export class ParamsRequest extends HTMLElement {
 
     const plainUrl = url.split('?')[0];
 
-    this.api.changeRequestUrl(`${ plainUrl }?${ plainQueryParams }`);
+    this.api.changeRequestUrl({
+      typeOfChange: 'paramsRow',
+      url: `${ plainUrl }?${ plainQueryParams }`
+    });
   }
 }
 

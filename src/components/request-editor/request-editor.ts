@@ -57,7 +57,7 @@ export class RequestEditor extends HTMLElement {
 
   private handleInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    this.api.changeRequestUrl(value);
+    this.api.changeRequestUrl({ typeOfChange: 'url', url: value });
   }
 
   private fillRequestTypes() {
@@ -105,7 +105,7 @@ export class RequestEditor extends HTMLElement {
   private observeRequestInput() {
     this.api.requestUrl$
       .pipe(takeUntil(this.api.unsubscribeNotifier()))
-      .subscribe(url => this.input.value = url);
+      .subscribe(url => this.input.value = url.url);
   }
 }
 

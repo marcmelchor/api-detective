@@ -1,5 +1,12 @@
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
+export enum RequestTabs {
+  Params = 'Params',
+  Authorization = 'Authorization',
+  Headers = 'Headers',
+  Body = 'Body'
+}
+
 export enum RequestTypes {
   GET = 'GET',
   POST = 'POST',
@@ -10,21 +17,16 @@ export enum RequestTypes {
   OPTIONS = 'OPTIONS'
 }
 
-export enum RequestTabs {
-  Params = 'Params',
-  Authorization = 'Authorization',
-  Headers = 'Headers',
-  Body = 'Body'
-}
-
 export type QueryParams = Record<number, { key: string; value: string; }>;
+
+export type RequestUrl = { typeOfChange: 'paramsRow' | 'url'; url: string; };
 
 
 export class ApiService {
   private _requestTab$ = new BehaviorSubject<RequestTabs>(RequestTabs.Params);
   private _requestType$ = new BehaviorSubject<RequestTypes>(RequestTypes.GET);
   private _response$ = new BehaviorSubject<Record<string, string | number | Record<string, string | number>>>({});
-  private _requestUrl$ = new BehaviorSubject<string>('');
+  private _requestUrl$ = new BehaviorSubject<RequestUrl>({ typeOfChange: 'url', url: '' });
   private unsubscribe$ = new ReplaySubject<void>(1);
 
   requestTab$ = this._requestTab$.asObservable();
@@ -44,7 +46,7 @@ export class ApiService {
     this._requestType$.next(type);
   }
 
-  changeRequestUrl(url: string) {
+  changeRequestUrl(url: RequestUrl) {
     this._requestUrl$.next(url);
   }
 
