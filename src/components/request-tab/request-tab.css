@@ -7,20 +7,21 @@
 @property --request-tab-color {
   syntax: "<color>";
   inherits: false;
-  initial-value: #d0c9bb;
+  initial-value: #828282;
 }
 
 @property --request-tab-color-active {
   syntax: "<color>";
   inherits: false;
-  initial-value: #edede7;
+  initial-value: #595959;
 }
 
 .request-tab-container {
   width: 100%;
   display: flex;
-  align-items: center;
+  justify-content: center;
   padding: 1em 0;
+  flex-direction: column;
 }
 
 .request-tabs {
@@ -43,4 +44,10 @@
   box-shadow: inset 0 -1px 0 var(--request-tab-active);
   color: var(--request-tab-color-active) !important;
   font-weight: bold;
+}
+
+.space-tab-container {
+  display: flex;
+  width: 100%;
+  height: 25em;
 }

@@ -1,3 +1,4 @@
+import { ApiService } from '../services/api-service';
 import { RequestEditor } from './request-editor/request-editor';
 import { RequestTab } from './request-tab/request-tab';
 import './style.css';
@@ -8,9 +9,13 @@ export class DetectiveAPI extends HTMLElement {
 
   constructor() {
     super();
+
+    this.api = new ApiService();
   }
 
-  create() {
+  api!: ApiService;
+
+  init() {
     const detectiveApi = document.createElement(DetectiveAPI.HTML_TAG) as DetectiveAPI;
     this.buildDetectiveApi(detectiveApi);
 
@@ -18,12 +23,12 @@ export class DetectiveAPI extends HTMLElement {
   }
 
   private buildDetectiveApi(detectiveApi: DetectiveAPI) {
-    const requestEditor = new RequestEditor();
-    const requestEditorComponent = requestEditor.create();
+    const requestEditor = new RequestEditor(this.api);
+    const requestEditorComponent = requestEditor.init();
     detectiveApi.appendChild(requestEditorComponent);
 
-    const requestTabs = new RequestTab();
-    const requestTabsComponent = requestTabs.create();
+    const requestTabs = new RequestTab(this.api);
+    const requestTabsComponent = requestTabs.init();
     detectiveApi.appendChild(requestTabsComponent);
   }
 }

@@ -78,6 +78,10 @@ const componentTS = {
         use: ['style-loader', 'css-loader'],
         exclude: /node_modules/,
       },
+      {
+        test: /\.svg$/,
+        type: 'asset/resource'
+      },
     ],
   },
   devtool: 'nosources-source-map',
