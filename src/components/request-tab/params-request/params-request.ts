@@ -173,12 +173,17 @@ export class ParamsRequest extends HTMLElement {
 
   private onInputChange(ev: Event, index: number, type: 'key' | 'value', url: string) {
     const newValue = (ev.target as HTMLInputElement).value;
-    console.log('newValue', newValue);
 
     this.queryParams[index][type] = newValue;
+    const allParams = Object.keys(this.queryParams);
     const plainQueryParams = Object.values(this.queryParams)
-      .reduce((acc, current) => {
-        return acc += `${ current.key }=${ current.value }`;
+      .reduce((acc, current, index) => {
+        acc += `${ current.key ?? '' }=${ current.value ?? '' }`;
+        if (index < allParams.length - 1 && allParams.length > 1) {
+          acc += '&';
+        }
+
+        return acc;
       }, '');
 
     const plainUrl = url.split('?')[0];
