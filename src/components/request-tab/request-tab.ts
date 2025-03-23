@@ -20,6 +20,7 @@ export class RequestTab extends HTMLElement {
 
     const paramsRequest = new ParamsRequest(this.api);
     const paramsComponent = paramsRequest.init();
+    paramsComponent.classList.add('border-tab-container');
     requestTab.appendChild(paramsComponent);
 
     return requestTab;

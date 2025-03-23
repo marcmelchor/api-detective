@@ -1,11 +1,3 @@
-.params-request-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  height: 20em;
-  overflow-y: auto;
-}
-
 .params-request-title {
   padding: 1em 0;
   color: var(--request-tab-color-active);
@@ -21,10 +13,10 @@
 
 .params-request-header {
   display: flex;
-  width: 34em;
+  width: 100%;
 
   .params-request-header-key-value {
-    width: 15em;
+    width: 47.5%;
     font-weight: bold;
     padding: 0.5em 0 0.5em 0.5em;
     border: 0.5px dashed var(--request-tab-color);
@@ -35,7 +27,7 @@
   }
 
   .params-request-header-actions {
-    width: 4em;
+    width: 5%;
     padding: 0.5em 0 0.5em 0.3em;
   }
 }
@@ -43,10 +35,10 @@
 .params-request-items {
   display: flex;
   flex-direction: column;
-  width: 34em;
+  width: 100%;
 
   .add-query {
-    width: 30em;
+    width: 95%;
     display: flex;
     padding: 0.5em 0;
     align-items: center;
@@ -64,7 +56,7 @@
   }
 
   .item-key-value {
-    width: 15em;
+    width: 47.5%;
     padding: 0.5em 0 0.5em 0.5em;
     border: 0.5px dashed var(--request-tab-color);
     overflow: hidden;
@@ -88,7 +80,7 @@
   }
 
   .item-actions {
-    width: 4em;
+    width: 5%;
     padding: 0.5em 0 0.5em 0.3em;
     display: flex;
     align-items: center;
