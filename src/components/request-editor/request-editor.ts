@@ -65,9 +65,9 @@ export class RequestEditor extends HTMLElement {
       .forEach(request => {
         this.select.insertAdjacentHTML('beforeend', `<option value="${ request }">${ request }</option>`);
       });
-      this.select.onchange = () => {
-        this.api.changeType(this.select.value as RequestTypes);
-      };
+    this.select.onchange = () => {
+      this.api.changeType(this.select.value as RequestTypes);
+    };
   }
 
   private async applyRequest(

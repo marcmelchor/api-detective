@@ -67,3 +67,12 @@
   height: 20em;
   overflow-y: auto;
 }
+
+.tab-request-title {
+  padding: 1em 0;
+  color: var(--request-tab-color-active);
+}
+
+.d-none {
+  display: none;
+}

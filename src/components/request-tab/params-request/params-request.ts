@@ -29,7 +29,7 @@ export class ParamsRequest extends HTMLElement {
     container.classList.add('tab-request-container');
 
     const title = document.createElement('h4');
-    title.classList.add('params-request-title');
+    title.classList.add('tab-request-title');
     title.innerHTML = 'Query Params';
     container.appendChild(title);
 
