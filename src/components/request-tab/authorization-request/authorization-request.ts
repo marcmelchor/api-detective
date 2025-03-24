@@ -1,5 +1,6 @@
-import { ApiService, AuthorizationTypes } from '../../../services/api-service';
+import { takeUntil } from 'rxjs';
 
+import { ApiService, AuthorizationTypes } from '../../../services/api-service';
 import './authorization-request.css';
 
 
@@ -11,8 +12,9 @@ export class AuthorizationRequest extends HTMLElement {
   }
 
   private authTypes = Object.keys(AuthorizationTypes);
-  private noAuthSection!: HTMLDivElement;
   private bearerTokenSection!: HTMLDivElement;
+  private bearerToken = '';
+  private noAuthSection!: HTMLDivElement;
 
   init() {
     const authRequest = document.createElement(AuthorizationRequest.HTML_TAG) as AuthorizationRequest;
@@ -31,13 +33,13 @@ export class AuthorizationRequest extends HTMLElement {
     container.appendChild(title);
 
     const body = document.createElement('div');
-    body.classList.add('auth-request-body');
+    body.classList.add('auth-request-container');
 
     const authType = document.createElement('div');
     authType.classList.add('auth-request-type');
     authType.insertAdjacentHTML(
       'afterbegin',
-      `<label for="auth-type-select"></label>`
+      `<label class="auth-request-label" for="auth-type-select"></label>`
     );
 
     const select = document.createElement('select');
@@ -46,9 +48,40 @@ export class AuthorizationRequest extends HTMLElement {
     this.fillAuthTypes(select);
     authType.appendChild(select);
     body.appendChild(authType);
-    container.appendChild(body);
 
+    const authBody = document.createElement('div');
+    authBody.classList.add('auth-request-body');
+    this.noAuthSection = document.createElement('div');
+    this.noAuthSection.classList.add('auth-request-body-content');
+    this.noAuthSection.insertAdjacentHTML(
+      'afterbegin',
+      `<h5>No Auth</h5>
+      <p>No Authorization needed.</p>`
+    );
+    this.bearerTokenSection = document.createElement('div');
+    this.bearerTokenSection.classList.add('auth-request-body', 'h-100');
+    const tokenContainer = document.createElement('div');
+    tokenContainer.classList.add('w-100', 'd-flex', 'align-center', 'gap-1', 'h-100');
+    const label = document.createElement('label');
+    label.htmlFor = 'auth-request-bearer';
+    label.innerHTML = 'Token:';
+    const input = document.createElement('input');
+    input.classList.add('w-100', 'auth-request-input');
+    input.id = 'auth-request-bearer';
+    input.addEventListener('input', this.handleInput.bind(this));
+
+    tokenContainer.appendChild(label);
+    tokenContainer.appendChild(input);
+    this.bearerTokenSection.appendChild(tokenContainer);
+
+    authBody.appendChild(this.noAuthSection);
+    authBody.appendChild(this.bearerTokenSection);
+    body.appendChild(authBody);
+
+    container.appendChild(body);
     authRequest.append(container);
+
+    this.onSubscribeAuth();
   }
 
   private fillAuthTypes(select: HTMLSelectElement) {
@@ -62,6 +95,28 @@ export class AuthorizationRequest extends HTMLElement {
       const target = value.target as HTMLSelectElement;
       this.api.changeAuthType(target.value as AuthorizationTypes);
     };
+  }
+
+  private onSubscribeAuth() {
+    this.api.authorizationTab$
+      .pipe(takeUntil(this.api.unsubscribeNotifier()))
+      .subscribe(authTab => {
+        switch (authTab) {
+          case AuthorizationTypes['Bearer Token']:
+            this.bearerTokenSection.classList.remove('d-none');
+            this.noAuthSection.classList.add('d-none');
+            break;
+          default:
+            this.bearerTokenSection.classList.add('d-none');
+            this.noAuthSection.classList.remove('d-none');
+            break;
+        }
+      });
+  }
+
+  private handleInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.api.changeBearerToken(value);
   }
 }
 

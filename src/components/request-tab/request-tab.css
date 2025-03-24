@@ -72,7 +72,3 @@
   padding: 1em 0;
   color: var(--request-tab-color-active);
 }
-
-.d-none {
-  display: none;
-}

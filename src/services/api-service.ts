@@ -29,6 +29,7 @@ export type RequestUrl = { typeOfChange: 'paramsRow' | 'url'; url: string; };
 
 export class ApiService {
   private _authorizationTab$ = new BehaviorSubject<AuthorizationTypes>(AuthorizationTypes['No Token']);
+  private _bearerToken$ = new BehaviorSubject<string>('');
   private _requestTab$ = new BehaviorSubject<RequestTabs>(RequestTabs.Params);
   private _requestType$ = new BehaviorSubject<RequestTypes>(RequestTypes.GET);
   private _response$ = new BehaviorSubject<Record<string, string | number | Record<string, string | number>>>({});
@@ -36,6 +37,7 @@ export class ApiService {
   private unsubscribe$ = new ReplaySubject<void>(1);
 
   authorizationTab$ = this._authorizationTab$.asObservable();
+  bearerToken$ = this._bearerToken$.asObservable();
   requestTab$ = this._requestTab$.asObservable();
   requestType$ = this._requestType$.asObservable();
   requestUrl$ = this._requestUrl$.asObservable();
@@ -43,6 +45,10 @@ export class ApiService {
 
   request(url: string, method: RequestTypes, body?: string, headers?: Record<string, string>) {
     return fetch(url, { body, headers, method });
+  }
+
+  changeBearerToken(token: string) {
+    this._bearerToken$.next(token);
   }
 
   changeAuthType(type: AuthorizationTypes) {

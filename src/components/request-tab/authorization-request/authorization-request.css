@@ -1,19 +1,45 @@
-.auth-request-body {
+.auth-request-container {
   width: 100%;
   display: flex;
+  height: 100%;
 }
 
 .auth-request-type {
   width: 20%;
   display: flex;
   flex-direction: column;
-  border: 0 0.5px 0 0 solid var(--request-tab-color);
+  border-right: 0.5px solid var(--request-tab-color);
+}
+
+.auth-request-label {
+  margin-top: 3px;
 }
 
 .auth-request-select {
-  height: 100%;
   border: 0.5px solid var(--request-editor-main-color);
-  border-radius: 5px 1px 5px 1px;
+  border-radius: 3px 3px 3px 3px;
   cursor: pointer;
   background: var(--request-editor-background);
+  width: 90%;
+}
+
+.auth-request-body {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-request-body-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 95%;
+}
+
+.auth-request-input {
+  border-radius: 5px;
+  border: 0.5px solid var(--request-editor-main-color);
 }
