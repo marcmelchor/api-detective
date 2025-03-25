@@ -22,7 +22,7 @@ export enum AuthorizationTypes {
   'Bearer Token' = 'Bearer Token',
 }
 
-export type QueryParams = Record<number, { key: string; value: string; }>;
+export type KeyValueRecord = Record<number, { key: string; value: string; }>;
 
 export type RequestUrl = { typeOfChange: 'paramsRow' | 'url'; url: string; };
 
@@ -30,6 +30,7 @@ export type RequestUrl = { typeOfChange: 'paramsRow' | 'url'; url: string; };
 export class ApiService {
   private _authorizationTab$ = new BehaviorSubject<AuthorizationTypes>(AuthorizationTypes['No Token']);
   private _bearerToken$ = new BehaviorSubject<string>('');
+  private _headersTab$ = new BehaviorSubject<KeyValueRecord>([]);
   private _requestTab$ = new BehaviorSubject<RequestTabs>(RequestTabs.Params);
   private _requestType$ = new BehaviorSubject<RequestTypes>(RequestTypes.GET);
   private _response$ = new BehaviorSubject<Record<string, string | number | Record<string, string | number>>>({});
@@ -38,6 +39,7 @@ export class ApiService {
 
   authorizationTab$ = this._authorizationTab$.asObservable();
   bearerToken$ = this._bearerToken$.asObservable();
+  headersTab$ = this._headersTab$.asObservable();
   requestTab$ = this._requestTab$.asObservable();
   requestType$ = this._requestType$.asObservable();
   requestUrl$ = this._requestUrl$.asObservable();
@@ -47,12 +49,16 @@ export class ApiService {
     return fetch(url, { body, headers, method });
   }
 
+  changeAuthType(type: AuthorizationTypes) {
+    this._authorizationTab$.next(type);
+  }
+
   changeBearerToken(token: string) {
     this._bearerToken$.next(token);
   }
 
-  changeAuthType(type: AuthorizationTypes) {
-    this._authorizationTab$.next(type);
+  changeHeaders(headers: KeyValueRecord) {
+    this._headersTab$.next(headers);
   }
 
   changeRequestTab(tab: RequestTabs) {

@@ -3,7 +3,7 @@ import { takeUntil } from 'rxjs';
 import addIcon from '../../../assets/icons/add.svg';
 import deleteIcon from '../../../assets/icons/delete.svg';
 
-import { ApiService, QueryParams } from '../../../services/api-service';
+import { ApiService, KeyValueRecord } from '../../../services/api-service';
 import './params-request.css';
 
 
@@ -15,7 +15,7 @@ export class ParamsRequest extends HTMLElement {
   }
 
   private body!: HTMLDivElement;
-  private queryParams: QueryParams = {};
+  private queryParams: KeyValueRecord = {};
 
   init() {
     const paramsRequest = document.createElement(ParamsRequest.HTML_TAG) as ParamsRequest;

@@ -1,8 +1,9 @@
 import { takeUntil } from 'rxjs';
 
 import { ApiService, RequestTabs } from '../../services/api-service';
-import { ParamsRequest } from './params-request/params-request';
 import { AuthorizationRequest } from './authorization-request/authorization-request';
+import { HeadersRequest } from './headers-request/headers-request';
+import { ParamsRequest } from './params-request/params-request';
 import './request-tab.css';
 
 
@@ -14,6 +15,7 @@ export class RequestTab extends HTMLElement {
   }
 
   private authComponent!: AuthorizationRequest;
+  private headersComponent!: HeadersRequest;
   private paramsComponent!: ParamsRequest;
   private requestTabs = Object.keys(RequestTabs);
 
@@ -30,6 +32,11 @@ export class RequestTab extends HTMLElement {
     this.authComponent = authRequest.init();
     this.authComponent.classList.add('border-tab-container');
     requestTab.appendChild(this.authComponent);
+
+    const headersRequest = new HeadersRequest(this.api);
+    this.headersComponent = headersRequest.init();
+    this.headersComponent.classList.add('border-tab-container');
+    requestTab.appendChild(this.headersComponent);
 
     this.observeRequestTabs(tabsContainer);
 
@@ -74,16 +81,24 @@ export class RequestTab extends HTMLElement {
       .subscribe(tab => {
         switch (tab) {
           case 'Params':
-            this.paramsComponent.classList.remove('d-none');
             this.authComponent.classList.add('d-none');
+            this.headersComponent.classList.add('d-none');
+            this.paramsComponent.classList.remove('d-none');
             break;
           case 'Authorization':
-            this.paramsComponent.classList.add('d-none');
             this.authComponent.classList.remove('d-none');
+            this.headersComponent.classList.add('d-none');
+            this.paramsComponent.classList.add('d-none');
+            break;
+          case 'Headers':
+            this.authComponent.classList.add('d-none');
+            this.headersComponent.classList.remove('d-none');
+            this.paramsComponent.classList.add('d-none');
             break;
           default:
-            this.paramsComponent.classList.add('d-none');
             this.authComponent.classList.add('d-none');
+            this.headersComponent.classList.add('d-none');
+            this.paramsComponent.classList.add('d-none');
             break;
         }
         for (const div of (Array.from(tabsContainer.children) as HTMLDivElement[])) {
