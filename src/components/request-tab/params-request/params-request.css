@@ -67,6 +67,7 @@
       border: 1px solid var(--request-editor-background);
       border-radius: 5px 2px;
       color: var(--request-editor-main-color);
+      padding: 0 5px;
     }
   }
 
