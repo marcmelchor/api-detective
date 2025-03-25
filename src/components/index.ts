@@ -1,7 +1,7 @@
 import { ApiService } from '../services/api-service';
 import { RequestEditor } from './request-editor/request-editor';
 import { RequestTab } from './request-tab/request-tab';
-import './style.css';
+import './index.css';
 
 
 export class DetectiveAPI extends HTMLElement {

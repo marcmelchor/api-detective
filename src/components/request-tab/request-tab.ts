@@ -2,6 +2,7 @@ import { takeUntil } from 'rxjs';
 
 import { ApiService, RequestTabs } from '../../services/api-service';
 import { ParamsRequest } from './params-request/params-request';
+import { AuthorizationRequest } from './authorization-request/authorization-request';
 import './request-tab.css';
 
 
@@ -12,15 +13,25 @@ export class RequestTab extends HTMLElement {
     super();
   }
 
+  private authComponent!: AuthorizationRequest;
+  private paramsComponent!: ParamsRequest;
   private requestTabs = Object.keys(RequestTabs);
 
   init() {
     const requestTab = document.createElement(RequestTab.HTML_TAG) as RequestTab;
-    this.buildComponent(requestTab);
+    const tabsContainer = this.buildComponent(requestTab);
 
     const paramsRequest = new ParamsRequest(this.api);
-    const paramsComponent = paramsRequest.init();
-    requestTab.appendChild(paramsComponent);
+    this.paramsComponent = paramsRequest.init();
+    this.paramsComponent.classList.add('border-tab-container');
+    requestTab.appendChild(this.paramsComponent);
+
+    const authRequest = new AuthorizationRequest(this.api);
+    this.authComponent = authRequest.init();
+    this.authComponent.classList.add('border-tab-container');
+    requestTab.appendChild(this.authComponent);
+
+    this.observeRequestTabs(tabsContainer);
 
     return requestTab;
   }
@@ -35,6 +46,8 @@ export class RequestTab extends HTMLElement {
 
     const spaceTabContainer = document.createElement('div');
     spaceTabContainer.classList.add('space-tab-container');
+
+    return tabsContainer;
   }
 
   private fillTabs(tabsContainer: HTMLDivElement) {
@@ -53,13 +66,26 @@ export class RequestTab extends HTMLElement {
         };
         tabsContainer.appendChild(tabContainer);
       });
-    this.observeRequestTabs(tabsContainer);
   }
 
   private observeRequestTabs(tabsContainer: HTMLDivElement) {
     this.api.requestTab$
       .pipe(takeUntil(this.api.unsubscribeNotifier()))
       .subscribe(tab => {
+        switch (tab) {
+          case 'Params':
+            this.paramsComponent.classList.remove('d-none');
+            this.authComponent.classList.add('d-none');
+            break;
+          case 'Authorization':
+            this.paramsComponent.classList.add('d-none');
+            this.authComponent.classList.remove('d-none');
+            break;
+          default:
+            this.paramsComponent.classList.add('d-none');
+            this.authComponent.classList.add('d-none');
+            break;
+        }
         for (const div of (Array.from(tabsContainer.children) as HTMLDivElement[])) {
           if (div.id === tab) {
             div.classList.add('request-tab--active');

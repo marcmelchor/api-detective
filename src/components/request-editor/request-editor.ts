@@ -48,7 +48,8 @@ export class RequestEditor extends HTMLElement {
 
     this.button = document.createElement('button');
     this.button.innerHTML = 'Send';
-    this.button.classList.add('request-editor-button');
+    this.button.disabled = true;
+    this.button.classList.add('request-editor-button', 'button-disabled');
     requestEditor.appendChild(this.button);
     this.button.onclick = () => {
       this.applyRequest(this.input.value);
@@ -65,9 +66,9 @@ export class RequestEditor extends HTMLElement {
       .forEach(request => {
         this.select.insertAdjacentHTML('beforeend', `<option value="${ request }">${ request }</option>`);
       });
-      this.select.onchange = () => {
-        this.api.changeType(this.select.value as RequestTypes);
-      };
+    this.select.onchange = () => {
+      this.api.changeType(this.select.value as RequestTypes);
+    };
   }
 
   private async applyRequest(
@@ -105,7 +106,22 @@ export class RequestEditor extends HTMLElement {
   private observeRequestInput() {
     this.api.requestUrl$
       .pipe(takeUntil(this.api.unsubscribeNotifier()))
-      .subscribe(url => this.input.value = url.url);
+      .subscribe(url => {
+        this.input.value = url.url;
+        if (!this.button) {
+          return;
+        }
+
+        if (!this.input.value.length) {
+          this.button.disabled = true;
+          this.button.classList.add('button-disabled');
+        } else {
+          if (this.button.disabled) {
+            this.button.disabled = false;
+            this.button.classList.remove('button-disabled');
+          }
+        }
+      });
   }
 }
 
