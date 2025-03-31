@@ -1,5 +1,6 @@
 <script lang="ts">
   import { RequestTabs, state } from '../../runes/api.svelte';
+  import ParamsRequest from './params-request/ParamsRequest.svelte';
 </script>
 
 <div class="d-flex flex-column justify-content-center request-tab-container w-100">
@@ -18,6 +19,7 @@
       </div>
     {/each}
   </div>
+  <ParamsRequest />
 </div>
 
 <style>

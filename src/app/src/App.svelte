@@ -1,6 +1,5 @@
 <script lang="ts">
   import DetectiveApi from './lib/components/DetectiveApi.svelte';
-  import Counter from './lib/Counter.svelte'
 </script>
 
 <div class="w-100 d-flex flex-column">
