@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { state } from '../../../runes/api.svelte';
+  import { state, getQueryParams } from '../../../runes/api.svelte';
   import KeyValueList from '../key-value-list/KeyValueList.svelte';
 </script>
 
@@ -7,7 +7,7 @@
   <div class="d-flex flex-column tab-request-container">
     <h4 class="tab-request-title">Query Params
     </h4>
-    <KeyValueList keyValue="{state.queryParams}" />
+    <KeyValueList keyValue="{getQueryParams()}" />
   </div>
 </div>
 

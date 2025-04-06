@@ -18,15 +18,33 @@ export enum RequestTypes {
 export type KeyValueRecord = Record<number, { key: string; value: string; }>;
 
 type State = {
-  queryParams: KeyValueRecord;
   requestTab: RequestTabs;
   requestType: RequestTypes;
   url: string
 };
 
 export const state: State = $state({
-  queryParams: {},
   requestTab: RequestTabs.Params,
   requestType: RequestTypes.GET,
   url: ''
 });
+
+let queryParams = $derived.by(() => {
+  const params = state.url.split('?');
+  if (params.length < 2) {
+    return {};
+  }
+
+  const queryParams: KeyValueRecord = {};
+  params[1].split('&')
+    .forEach((param, index) => {
+      const keyValue = param.split('=');
+      queryParams[index] = { key: keyValue[0], value: keyValue[1] };
+    });
+
+  return queryParams;
+});
+
+export function getQueryParams(): KeyValueRecord {
+  return queryParams;
+}

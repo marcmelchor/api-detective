@@ -20,10 +20,13 @@
         id="{key}"
         class="d-flex w-100">
         <div class="align-items-center d-flex item-key-value">
-          <input class="color-param-key" />
+          <input
+            class="color-param-key"
+            bind:value={ row.key } />
         </div>
         <div class="align-items-center d-flex item-key-value">
-          <input />
+          <input
+            bind:value={ row.value }/>
         </div>
         <div class="align-items-center delete-item d-flex">
           <img
