@@ -1,9 +1,26 @@
 <script lang="ts">
   import add from '../../../../assets/add.svg';
   import del from '../../../../assets/delete.svg';
-  import type { KeyValueRecord } from '../../../runes/api.svelte';
+  import { state, type KeyValueRecord } from '../../../runes/api.svelte';
 
   let { keyValue }: { keyValue: KeyValueRecord } = $props();
+
+  function onChangeInput(key: number, input: string, isKey = true) {
+    if (isKey) {
+      keyValue[key].key = input;
+    } else {
+      keyValue[key].value = input;
+    }
+
+    const params = Object.values(keyValue)
+      .map(param => `${ param.key }=${ param.value }`)
+      .join('&');
+    if (params.length) {
+      const urlComponents = state.url.split('?');
+      const pureUrl = urlComponents[0];
+      state.url = `${ pureUrl }?${ params }`;
+    }
+  }
 </script>
 
 <div class="align-items-center d-flex flex-column justify-content-center w-100">
@@ -22,11 +39,19 @@
         <div class="align-items-center d-flex item-key-value">
           <input
             class="color-param-key"
-            bind:value={ row.key } />
+            bind:value={ row.key }
+            oninput={(ev) => {
+              const target = ev.target as HTMLInputElement;
+              onChangeInput(+key, target.value);
+            }} />
         </div>
         <div class="align-items-center d-flex item-key-value">
           <input
-            bind:value={ row.value }/>
+            bind:value={ row.value }
+            oninput="{(ev) => {
+              const target = ev.target as HTMLInputElement;
+              onChangeInput(+key, target.value, false);
+            }}"/>
         </div>
         <div class="align-items-center delete-item d-flex">
           <img
