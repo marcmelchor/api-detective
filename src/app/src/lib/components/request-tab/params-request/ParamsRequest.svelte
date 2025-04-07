@@ -1,13 +1,26 @@
 <script lang="ts">
-  import { state, getQueryParams } from '../../../runes/api.svelte';
+  import { state, getQueryParams, type KeyValueRecord } from '../../../runes/api.svelte';
   import KeyValueList from '../key-value-list/KeyValueList.svelte';
+
+  function onAfterKeyValue(keyValue: KeyValueRecord) {
+    const params = Object.values(keyValue)
+      .map(param => `${ param.key }=${ param.value }`)
+      .join('&');
+    if (params.length) {
+      const urlComponents = state.url.split('?');
+      const pureUrl = urlComponents[0];
+      state.url = `${ pureUrl }?${ params }`;
+    }
+  }
 </script>
 
 <div class="border-tab-container">
   <div class="d-flex flex-column tab-request-container">
     <h4 class="tab-request-title">Query Params
     </h4>
-    <KeyValueList keyValue="{getQueryParams()}" />
+    <KeyValueList
+      keyValue="{getQueryParams()}"
+      afterKeyValue="{ val => onAfterKeyValue(val) }" />
   </div>
 </div>
 

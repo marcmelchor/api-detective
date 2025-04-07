@@ -1,9 +1,10 @@
 <script lang="ts">
+  import { type KeyValueRecord } from '../../../runes/api.svelte';
   import add from '../../../../assets/add.svg';
   import del from '../../../../assets/delete.svg';
-  import { state, type KeyValueRecord } from '../../../runes/api.svelte';
 
-  let { keyValue }: { keyValue: KeyValueRecord } = $props();
+  type Props = { keyValue: KeyValueRecord; afterKeyValue: (k: KeyValueRecord) => void; };
+  let { keyValue, afterKeyValue }: Props = $props();
 
   function onChangeInput(key: number, input: string, isKey = true) {
     if (isKey) {
@@ -11,15 +12,7 @@
     } else {
       keyValue[key].value = input;
     }
-
-    const params = Object.values(keyValue)
-      .map(param => `${ param.key }=${ param.value }`)
-      .join('&');
-    if (params.length) {
-      const urlComponents = state.url.split('?');
-      const pureUrl = urlComponents[0];
-      state.url = `${ pureUrl }?${ params }`;
-    }
+    afterKeyValue(keyValue);
   }
 </script>
 
