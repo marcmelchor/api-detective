@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type KeyValueRecord } from '../../../runes/api.svelte';
+  import { state, type KeyValueRecord } from '../../../runes/api.svelte';
   import add from '../../../../assets/add.svg';
   import del from '../../../../assets/delete.svg';
 
@@ -17,6 +17,12 @@
 
   function onDeleteKeyParam(key: number) {
     delete keyValue[key];
+    afterKeyValue(keyValue);
+  }
+
+  function onAddKeyValue() {
+    const lastKey = Object.keys(keyValue).slice(-1);
+    keyValue[lastKey.length ? +lastKey + 1 : 0] = { key: '', value: '' };
     afterKeyValue(keyValue);
   }
 </script>
@@ -54,7 +60,7 @@
         <div class="align-items-center delete-item d-flex">
           <button
             onclick="{ () => onDeleteKeyParam(+key) }"
-            class="delete-button">
+            class="action-button">
             <img
               alt="delete-{key}"
               src="{del}"
@@ -63,12 +69,18 @@
         </div>
       </div>
     {/each}
-    <div class="add-query align-items-center d-flex justify-content-center">
-      <img
-        alt="add"
-        src="{add}"
-        title="Add query parameter" />
-    </div>
+    {#if state.url.length }
+      <div class="add-query align-items-center d-flex justify-content-center">
+        <button
+          onclick="{ () => onAddKeyValue() }"
+          class="action-button">
+          <img
+            alt="add"
+            src="{add}"
+            title="Add query parameter" />
+        </button>
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -121,7 +133,7 @@
     width: 5%;
   }
 
-  .delete-button {
+  .action-button {
     background-color: transparent;
     border: 0;
     padding: 0;
