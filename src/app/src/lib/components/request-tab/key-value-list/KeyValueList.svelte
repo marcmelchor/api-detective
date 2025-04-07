@@ -14,6 +14,11 @@
     }
     afterKeyValue(keyValue);
   }
+
+  function onDeleteKeyParam(key: number) {
+    delete keyValue[key];
+    afterKeyValue(keyValue);
+  }
 </script>
 
 <div class="align-items-center d-flex flex-column justify-content-center w-100">
@@ -47,10 +52,14 @@
             }}"/>
         </div>
         <div class="align-items-center delete-item d-flex">
-          <img
-            alt="delete-{key}"
-            src="{del}"
-            title="Remove query parameter" />
+          <button
+            onclick="{ () => onDeleteKeyParam(+key) }"
+            class="delete-button">
+            <img
+              alt="delete-{key}"
+              src="{del}"
+              title="Remove query parameter" />
+          </button>
         </div>
       </div>
     {/each}
@@ -110,5 +119,12 @@
   .delete-item {
     padding: 0.5em 0 0.5em 0.3em;
     width: 5%;
+  }
+
+  .delete-button {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
   }
 </style>

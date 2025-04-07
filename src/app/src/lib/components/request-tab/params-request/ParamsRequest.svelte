@@ -6,10 +6,13 @@
     const params = Object.values(keyValue)
       .map(param => `${ param.key }=${ param.value }`)
       .join('&');
+      console.log('P', params);
+    const urlComponents = state.url.split('?');
+    const pureUrl = urlComponents[0];
     if (params.length) {
-      const urlComponents = state.url.split('?');
-      const pureUrl = urlComponents[0];
       state.url = `${ pureUrl }?${ params }`;
+    } else {
+      state.url = `${ pureUrl }`;
     }
   }
 </script>
@@ -19,7 +22,7 @@
     <h4 class="tab-request-title">Query Params
     </h4>
     <KeyValueList
-      keyValue="{getQueryParams()}"
+      keyValue="{ getQueryParams() }"
       afterKeyValue="{ val => onAfterKeyValue(val) }" />
   </div>
 </div>
