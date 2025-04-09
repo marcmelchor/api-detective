@@ -26,16 +26,3 @@
       afterKeyValue="{ val => onAfterKeyValue(val) }" />
   </div>
 </div>
-
-<style>
-  .tab-request-container {
-    width: 98%;
-    height: 20em;
-    overflow-y: auto;
-  }
-
-  .tab-request-title {
-    padding: 1em 0;
-    color: var(--request-tab-color-active);
-  }
-</style>

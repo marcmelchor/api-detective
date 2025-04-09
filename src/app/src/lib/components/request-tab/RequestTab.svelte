@@ -1,5 +1,6 @@
 <script lang="ts">
   import { RequestTabs, state } from '../../runes/api.svelte';
+  import HeadersRequest from './headers-request/HeadersRequest.svelte';
   import ParamsRequest from './params-request/ParamsRequest.svelte';
 </script>
 
@@ -19,7 +20,12 @@
       </div>
     {/each}
   </div>
-  <ParamsRequest />
+  {#if state.requestTab === RequestTabs.Params }
+    <ParamsRequest />
+  {/if}
+  {#if state.requestTab === RequestTabs.Headers }
+    <HeadersRequest />
+  {/if}
 </div>
 
 <style>
