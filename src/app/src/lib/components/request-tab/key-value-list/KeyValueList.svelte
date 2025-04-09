@@ -31,6 +31,16 @@
 
     afterKeyValue(keyValue);
   }
+
+  function lastKeyValueIsNotEmpty() {
+    const valuesList = Object.values(keyValue);
+    if (valuesList.length) {
+      const lastItem = valuesList.slice(-1)[0];
+      return !!lastItem.key.length || !!lastItem.value.length;
+    }
+
+    return false;
+  }
 </script>
 
 <div class="align-items-center d-flex flex-column justify-content-center w-100">
@@ -76,16 +86,18 @@
       </div>
     {/each}
     {#if ableToAdd }
-      <div class="add-query align-items-center d-flex justify-content-center">
-        <button
-          onclick="{ () => onAddKeyValue() }"
-          class="action-button">
-          <img
-            alt="add"
-            src="{add}"
-            title="Add query parameter" />
-        </button>
-      </div>
+      {#if !Object.keys(keyValue).length || lastKeyValueIsNotEmpty()}
+        <div class="add-query align-items-center d-flex justify-content-center">
+          <button
+            onclick="{ () => onAddKeyValue() }"
+            class="action-button">
+            <img
+              alt="add"
+              src="{add}"
+              title="Add query parameter" />
+          </button>
+        </div>
+      {/if}
     {/if}
   </div>
 </div>
