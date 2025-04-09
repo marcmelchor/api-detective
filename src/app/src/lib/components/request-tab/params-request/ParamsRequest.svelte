@@ -6,7 +6,7 @@
     const params = Object.values(keyValue)
       .map(param => `${ param.key }=${ param.value }`)
       .join('&');
-      console.log('P', params);
+
     const urlComponents = state.url.split('?');
     const pureUrl = urlComponents[0];
     if (params.length) {

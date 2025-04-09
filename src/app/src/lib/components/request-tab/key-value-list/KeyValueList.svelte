@@ -1,10 +1,14 @@
 <script lang="ts">
-  import { state, type KeyValueRecord } from '../../../runes/api.svelte';
+  import { type KeyValueRecord } from '../../../runes/api.svelte';
   import add from '../../../../assets/add.svg';
   import del from '../../../../assets/delete.svg';
 
-  type Props = { keyValue: KeyValueRecord; afterKeyValue: (k: KeyValueRecord) => void; };
-  let { keyValue, afterKeyValue }: Props = $props();
+  type Props = {
+    ableToAdd: boolean;
+    afterKeyValue: (k: KeyValueRecord) => void;
+    keyValue: KeyValueRecord;
+  };
+  let { ableToAdd = true, afterKeyValue, keyValue }: Props = $props();
 
   function onChangeInput(key: number, input: string, isKey = true) {
     if (isKey) {
@@ -12,10 +16,11 @@
     } else {
       keyValue[key].value = input;
     }
+
     afterKeyValue(keyValue);
   }
 
-  function onDeleteKeyParam(key: number) {
+  function onDeleteKeyValue(key: number) {
     delete keyValue[key];
     afterKeyValue(keyValue);
   }
@@ -23,6 +28,7 @@
   function onAddKeyValue() {
     const lastKey = Object.keys(keyValue).slice(-1);
     keyValue[lastKey.length ? +lastKey + 1 : 0] = { key: '', value: '' };
+
     afterKeyValue(keyValue);
   }
 </script>
@@ -43,7 +49,7 @@
         <div class="align-items-center d-flex item-key-value">
           <input
             class="color-param-key"
-            bind:value={ row.key }
+            value="{ row.key }"
             oninput={(ev) => {
               const target = ev.target as HTMLInputElement;
               onChangeInput(+key, target.value);
@@ -51,7 +57,7 @@
         </div>
         <div class="align-items-center d-flex item-key-value">
           <input
-            bind:value={ row.value }
+            value="{ row.value }"
             oninput="{(ev) => {
               const target = ev.target as HTMLInputElement;
               onChangeInput(+key, target.value, false);
@@ -59,7 +65,7 @@
         </div>
         <div class="align-items-center delete-item d-flex">
           <button
-            onclick="{ () => onDeleteKeyParam(+key) }"
+            onclick="{ () => onDeleteKeyValue(+key) }"
             class="action-button">
             <img
               alt="delete-{key}"
@@ -69,7 +75,7 @@
         </div>
       </div>
     {/each}
-    {#if state.url.length }
+    {#if ableToAdd }
       <div class="add-query align-items-center d-flex justify-content-center">
         <button
           onclick="{ () => onAddKeyValue() }"
