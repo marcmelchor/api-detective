@@ -22,6 +22,7 @@
     <h4 class="tab-request-title">Query Params
     </h4>
     <KeyValueList
+      ableToAdd="{ !!state.url.length }"
       keyValue="{ getQueryParams() }"
       afterKeyValue="{ val => onAfterKeyValue(val) }" />
   </div>
