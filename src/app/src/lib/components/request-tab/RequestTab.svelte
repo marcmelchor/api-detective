@@ -1,5 +1,6 @@
 <script lang="ts">
   import { RequestTabs, state } from '../../runes/api.svelte';
+  import AuthorizationRequest from './authorization-request/AuthorizationRequest.svelte';
   import HeadersRequest from './headers-request/HeadersRequest.svelte';
   import ParamsRequest from './params-request/ParamsRequest.svelte';
 </script>
@@ -25,6 +26,9 @@
   {/if}
   {#if state.requestTab === RequestTabs.Headers }
     <HeadersRequest />
+  {/if}
+  {#if state.requestTab === RequestTabs.Authorization }
+    <AuthorizationRequest />
   {/if}
 </div>
 
