@@ -19,7 +19,7 @@
 
 <div class="border-tab-container">
   <div class="d-flex flex-column tab-request-container">
-    <h4 class="tab-request-title">Query Params
+    <h4>Query Params
     </h4>
     <KeyValueList
       ableToAdd="{ !!state.url.length }"

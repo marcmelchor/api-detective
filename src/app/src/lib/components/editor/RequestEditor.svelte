@@ -22,9 +22,8 @@
       type="text" />
   </div>
   <button
-    class:request-button-disabled="{!state.url.length}"
     disabled="{!state.url.length}"
-    class="h-100 request-button">Send
+    class="h-100 button button--primary">Send
   </button>
 </div>
 
@@ -54,19 +53,5 @@
     border-radius: 0 5px 5px 0;
     text-indent: 0.5em;
     background: var(--request-editor-background);
-  }
-
-  .request-button {
-    width: 8em;
-    border-radius: 5px;
-    border: 0;
-    background-color: var(--request-editor-main-color);
-    color: white;
-    cursor: pointer;
-  }
-
-  .request-button-disabled {
-    opacity: 0.7;
-    cursor: default;
   }
 </style>
