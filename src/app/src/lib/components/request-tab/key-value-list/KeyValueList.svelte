@@ -104,7 +104,7 @@
 
 <style>
   .key-value-header {
-    border: 0.5px dashed var(--request-tab-color);
+    border: 0.5px dashed var(--disabled-text);
     font-weight: bold;
     padding: 0.5em 0 0.5em 0.5em;
     width: 47.5%;
@@ -125,7 +125,7 @@
   }
 
   .item-key-value {
-    border: 0.5px dashed var(--request-tab-color);
+    border: 0.5px dashed var(--disabled-text);
     overflow: hidden;
     padding: 0.5em 0 0.5em 0.5em;
     text-overflow: ellipsis;
@@ -133,17 +133,16 @@
     width: 47.5%;
 
     input {
-      background-color: transparent;
-      border: 1px solid var(--request-editor-background);
-      border-radius: 5px 2px;
-      color: var(--request-editor-main-color);
+      color: var(--destructive-color);
+      border: 1px solid var(--disabled-text);
+      height: 1.75rem;
       padding: 0 5px;
       width: 95%;
     }
   }
 
   .color-param-key {
-    color: var(--request-tab-active) !important;
+    color: var(--primary-color) !important;
   }
 
   .delete-item {

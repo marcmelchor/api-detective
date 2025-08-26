@@ -43,14 +43,14 @@
   }
 
   .request-tab {
-    color: var(--request-tab-color);
+    color: var(--disabled-text);
     padding: 0.5em 0.5em;
     cursor: pointer;
   }
 
   .active {
-    box-shadow: inset 0 -1px 0 var(--request-tab-active);
-    color: var(--request-tab-color-active) !important;
-    font-weight: bold;
+    box-shadow: inset 0 -1px 0 var(--destructive-color);
+    color: var(--text-color) !important;
+    font-weight: 400;
   }
 </style>
