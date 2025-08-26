@@ -179,6 +179,46 @@ section {
   pointer-events: none;
 }
 
+label {
+  color: var(--text-color);
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+input,
+select,
+textarea {
+  background-color: var(--input-background);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-sm);
+  color: var(--input-text);
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px color-mix(in in srgb, var(--primary-color) 40%, transparent);
+  outline: none;
+}
+
+input[disabled],
+select[disabled],
+textarea[disabled] {
+  background-color: var(--disabled-background);
+  border-color: var(--disabled-background);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+}
+
+textarea {
+  resize: vertical;
+}
+
 @property --request-tab-active {
   syntax: "<color>";
   inherits: false;
@@ -242,7 +282,15 @@ section {
 }
 
 .gap-1 {
-  gap: 3px;
+  gap: 4px;
+}
+
+.gap-2 {
+  gap: 8px;
+}
+
+.gap-3 {
+  gap: 12px;
 }
 
 .overflow-y-auto {
