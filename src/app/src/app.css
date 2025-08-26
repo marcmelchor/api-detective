@@ -1,3 +1,69 @@
+@property --card-border {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #3d3d4b;
+}
+
+@property --primary-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #a0a0ff;
+}
+
+@property --secondary-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #3d3d4b;
+}
+
+@property --destructive-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #ff9191;
+}
+
+@property --input-background {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #1e1e24;
+}
+
+@property --input-border {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #3d3d4b;
+}
+
+@property --input-text {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #d1d1d6;
+}
+
+@property --disabled-background {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #2a2a30;
+}
+
+@property --disabled-text {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #666670;
+}
+
+@property --selected {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #282836;
+}
+
+@property --active {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #1e2b4d;
+}
+
 @property --request-tab-active {
   syntax: "<color>";
   inherits: false;
@@ -84,13 +150,14 @@
 }
 
 .tab-request-container {
-  width: 98%;
   height: 20em;
   overflow-y: auto;
+  padding-block: 0.5em;
+  padding-inline: 1em;
+  width: 100%;
 }
 
 .tab-request-title {
-  padding: 1em 0;
   color: var(--request-tab-color-active);
 }
 
