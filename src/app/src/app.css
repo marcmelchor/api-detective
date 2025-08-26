@@ -1,0 +1,277 @@
+:root {
+  --padding-md: 2rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+}
+
+@property --background-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #12121c;
+}
+
+@property --text-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #d1d1d6;
+}
+
+@property --card-background {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #1e1e24;
+}
+
+@property --card-border {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #3d3d4b;
+}
+
+@property --primary-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #a0a0ff;
+}
+
+@property --secondary-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #3d3d4b;
+}
+
+@property --destructive-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #ff9191;
+}
+
+@property --input-background {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #1e1e24;
+}
+
+@property --input-border {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #3d3d4b;
+}
+
+@property --input-text {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #d1d1d6;
+}
+
+@property --disabled-background {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #2a2a30;
+}
+
+@property --disabled-text {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #666670;
+}
+
+@property --selected {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #282836;
+}
+
+@property --active {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #1e2b4d;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1 {
+  color: var(--text-color);
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+h4 {
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+/* Card component */
+section {
+  background-color: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 3rem;
+  min-height: 20rem;
+  padding: var(--padding-md);
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.button {
+  align-items: center;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  font-weight: 500;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.button--primary {
+  background-color: var(--primary-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--card-background);
+}
+
+.button-primary:hover {
+  opacity: 0.9;
+}
+
+.button--secondary {
+  background-color: var(--secondary-color);
+  border: 1px solid var(--card-border);
+  color: var(--text-color);
+}
+
+.button--secondary:hover {
+  opacity: 0.9;
+}
+
+.button--ghost {
+  background-color: transparent;
+  border: 1px solid var(--card-border);
+  color: var(--text-color);
+}
+
+.button--ghost:hover {
+  background-color: var(--secondary-color);
+}
+
+.button--destructive {
+  background-color: var(--destructive-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--card-background);
+}
+
+.button--destructive:hover {
+  opacity: 0.9;
+}
+
+.button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+label {
+  color: var(--text-color);
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+input,
+select,
+textarea {
+  background-color: var(--input-background);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-sm);
+  color: var(--input-text);
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px color-mix(in in srgb, var(--primary-color) 40%, transparent);
+  outline: none;
+}
+
+input[disabled],
+select[disabled],
+textarea[disabled] {
+  background-color: var(--disabled-background);
+  border-color: var(--disabled-background);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.w-auto {
+  width: auto;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.d-none {
+  display: none;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.gap-1 {
+  gap: 6px;
+}
+
+.gap-2 {
+  gap: 12px;
+}
+
+.gap-3 {
+  gap: 18px;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
