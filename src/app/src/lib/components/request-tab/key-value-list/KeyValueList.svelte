@@ -76,7 +76,7 @@
         <div class="align-items-center delete-item d-flex">
           <button
             onclick="{ () => onDeleteKeyValue(+key) }"
-            class="action-button">
+            class="button button--no-padding button--destructive">
             <img
               alt="delete-{key}"
               src="{del}"
@@ -90,7 +90,7 @@
         <div class="add-query align-items-center d-flex justify-content-center">
           <button
             onclick="{ () => onAddKeyValue() }"
-            class="action-button">
+            class="button button--no-padding button--primary">
             <img
               alt="add"
               src="{add}"
@@ -148,12 +148,5 @@
   .delete-item {
     padding: 0.5em 0 0.5em 0.3em;
     width: 5%;
-  }
-
-  .action-button {
-    background-color: transparent;
-    border: 0;
-    padding: 0;
-    cursor: pointer;
   }
 </style>

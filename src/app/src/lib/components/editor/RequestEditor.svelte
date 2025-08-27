@@ -2,7 +2,7 @@
   import { state, RequestTypes } from '../../runes/api.svelte';
 </script>
 
-<div class="align-items-center d-flex editor-height gap-3 w-100">
+<div class="align-items-center d-flex gap-3 w-100">
   <div class="align-items-center d-flex min-width-select">
     <label for="request-type-select">
     </label>
@@ -29,10 +29,6 @@
 </div>
 
 <style>
-  .editor-height {
-    height: 2.5em;
-  }
-
   .min-width-select {
     min-width: 6rem;
   }
