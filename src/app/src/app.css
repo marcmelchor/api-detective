@@ -91,7 +91,7 @@
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Monaco', 'Courier New', monospace;
   transition: background-color 0.3s, color 0.3s;
 }
 

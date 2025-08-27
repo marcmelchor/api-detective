@@ -3,7 +3,7 @@
 </script>
 
 <div class="align-items-center d-flex editor-height gap-3 w-100">
-  <div class="align-items-center d-flex max-width-select">
+  <div class="align-items-center d-flex min-width-select">
     <label for="request-type-select">
     </label>
     <select
@@ -33,7 +33,7 @@
     height: 2.5em;
   }
 
-  .max-width-select {
-    max-width: 6rem;
+  .min-width-select {
+    min-width: 6rem;
   }
 </style>
