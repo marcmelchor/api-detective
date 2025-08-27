@@ -6,7 +6,7 @@
 		{
 			"label": "Build & Watch",
 			"type": "shell",
-			"command": "npm run compile && npm run watch",
+			"command": "npm run compile && cd src/app && npm run buildAndWatch", // Compile extension.ts and afterwards the Svelte app
 			"problemMatcher": "$ts-webpack-watch",
 			"isBackground": true,
 			"presentation": {

@@ -90,4 +90,4 @@ const componentTS = {
   },
 };
 
-module.exports = [extensionConfig, componentTS];
+module.exports = [extensionConfig, /* componentTS */]; // No longer compile old components
