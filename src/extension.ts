@@ -17,18 +17,27 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 			);
 			const html = vscode.Uri.file(
-				path.join(context.extensionPath, 'src', 'extension.html')
+				path.join(context.extensionPath, 'src', 'app', 'dist', 'index.html')
 			);
 
 			const componentJsUri = panel.webview.asWebviewUri(
-				vscode.Uri.file(path.join(context.extensionPath, 'dist', 'detective-api', 'index.js'))
+				vscode.Uri.file(path.join(context.extensionPath, 'src', 'app', 'dist', 'assets', 'index.js'))
 			);
+
+			const componentCssUri = panel.webview.asWebviewUri(
+				vscode.Uri.file(path.join(context.extensionPath, 'src', 'app', 'dist', 'assets', 'index.css'))
+			);
+
 			let componentHTML = fs.readFileSync(html.fsPath, 'utf-8');
 
 			componentHTML = componentHTML
 				.replace(
-					"import { DetectiveAPI } from './index.js';",
-					`import { DetectiveAPI } from '${ componentJsUri }';`
+					'<script type="module" crossorigin src="/assets/index.js"></script>',
+					`<script type="module" crossorigin src="${ componentJsUri }"></script>`
+				)
+				.replace(
+					'<link rel="stylesheet" crossorigin href="/assets/index.css">',
+					`<link rel="stylesheet" crossorigin href="${ componentCssUri }">`
 				);
 			panel.webview.html = componentHTML;
 		})
